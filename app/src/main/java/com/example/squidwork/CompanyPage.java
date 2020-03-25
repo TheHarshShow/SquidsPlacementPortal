@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,19 +17,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class StudentPage extends AppCompatActivity implements View.OnClickListener {
+public class CompanyPage extends AppCompatActivity implements View.OnClickListener {
 
     private Button signOutButton;
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_page);
+        setContentView(R.layout.activity_company_page);
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -45,13 +43,11 @@ public class StudentPage extends AppCompatActivity implements View.OnClickListen
 
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
-
-
     }
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
 
             case R.id.sign_out_button:
@@ -60,7 +56,7 @@ public class StudentPage extends AppCompatActivity implements View.OnClickListen
                         new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(StudentPage.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CompanyPage.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
                                 finish();
 
                             }
@@ -72,5 +68,7 @@ public class StudentPage extends AppCompatActivity implements View.OnClickListen
 
 
         }
+
+
     }
 }
