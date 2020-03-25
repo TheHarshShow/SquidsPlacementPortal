@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GoogleSignInClient mGoogleSignInClient;
     private String TAG = "myActivity";
     private FirebaseAuth mAuth;
-    private Button signOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +47,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         signInButton = findViewById(R.id.sign_in_button);
         mAuth = FirebaseAuth.getInstance();
-        signOutButton = findViewById(R.id.sign_out_button);
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        findViewById(R.id.sign_out_button).setOnClickListener(this);
-
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("863011320660-r32ro0lja4pjlu758sakd2ek25oio8fl.apps.googleusercontent.com").requestEmail().build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
 
     }
 
@@ -71,6 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        if(currentUser!=null){
+
+            startActivity(new Intent(MainActivity.this, StudentPage.class));
+
+        }
+
 //        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
     }
@@ -83,20 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 signIn();
                 break;
             // ...
-            case R.id.sign_out_button:
-                mAuth.signOut();
-                mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                        new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(MainActivity.this, "Signed out successfully", Toast.LENGTH_LONG).show();
-                                signOutButton.setVisibility(View.INVISIBLE);
 
-                            }
-
-                        }
-
-                        );
 
         }
     }
@@ -144,14 +137,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Toast.makeText(MainActivity.this, "Signed In Successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Signed In Successfully", Toast.LENGTH_SHORT).show();
 
             firebaseAuthWithGoogle(account);
             // Signed in successfully, show authenticated UI.
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Toast.makeText(MainActivity.this, "Couldn't Sign In", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Couldn't Sign In", Toast.LENGTH_SHORT).show();
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
 
         }
@@ -168,13 +161,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            Toast.makeText(MainActivity.this, "signInWithCredential Success", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "signInWithCredential Success", Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            signOutButton.setVisibility(View.VISIBLE);
+
+                            startActivity(new Intent(MainActivity.this, StudentPage.class));
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication Failed", Toast.LENGTH_LONG).show();
+
+
+                            mGoogleSignInClient.signOut();
+                            Toast.makeText(MainActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                         }
 
                         // ...
