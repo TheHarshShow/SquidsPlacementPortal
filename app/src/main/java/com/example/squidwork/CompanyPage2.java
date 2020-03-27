@@ -1,5 +1,6 @@
 package com.example.squidwork;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,8 @@ public class CompanyPage2 extends Fragment{
         View v=inflater.inflate(R.layout.fragment_companypage2, container, false);
 
         Button signOutButton =  (Button) v.findViewById(R.id.sign_out_button2);
+
+
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
