@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CompanyPage"></activity>
+        <activity android:name=".AddPostingFormPage"></activity>
+        <activity android:name=".CompanyPage" />
         <activity android:name=".NotYetDecidedPage" />
         <activity android:name=".StudentPage" />
         <activity

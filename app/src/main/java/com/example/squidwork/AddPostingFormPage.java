@@ -39,6 +39,7 @@ public class AddPostingFormPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_posting_form_page);
 
+
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -160,3 +161,4 @@ public class AddPostingFormPage extends AppCompatActivity {
 
     }
 }
+

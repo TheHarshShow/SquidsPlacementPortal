@@ -72,6 +72,7 @@ public class CompanyPage1 extends Fragment{
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
@@ -142,6 +143,7 @@ public class CompanyPage1 extends Fragment{
             @Override
             public void onClick(View v) {
 
+                System.out.println("NENENE");
                 startActivity(new Intent(CompanyPage1.this.getActivity(), AddPostingFormPage.class));
 
             }
