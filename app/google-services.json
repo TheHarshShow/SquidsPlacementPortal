@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "863011320660-8cjq11653vts73rliifubrnpvtccf03c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.squidwork",
+            "certificate_hash": "d752480e8d68df9ca3152fd7c88564fc4c0b2627"
+          }
+        },
+        {
           "client_id": "863011320660-t6jghu6sg05vc705j3qmsuqeu3kjna36.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
