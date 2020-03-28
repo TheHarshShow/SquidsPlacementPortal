@@ -71,7 +71,6 @@ public class CompanyPage1 extends Fragment{
         // Required empty public constructor
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,9 +84,7 @@ public class CompanyPage1 extends Fragment{
         layoutManager = new GridLayoutManager(getActivity(), 1);
 
         applicationsRecyclerView.setLayoutManager(layoutManager);
-
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
         mAdapter = new MyAdapter(jobs);
         applicationsRecyclerView.setAdapter(mAdapter);

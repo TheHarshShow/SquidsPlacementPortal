@@ -36,11 +36,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
+
+
     // Provide a suitable constructor (depends on the kind of dataset)
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public MyAdapter(ArrayList<JobPosting> jobs) {
-
 
         this.mDataset = jobs;
         this.notifyDataSetChanged();
@@ -72,6 +73,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.jobDescriptionTextView.setText(mDataset.get(position).jobDescripion);
 
     }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
