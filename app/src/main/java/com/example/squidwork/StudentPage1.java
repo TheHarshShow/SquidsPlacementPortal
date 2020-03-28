@@ -40,30 +40,32 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-/*class JobPosting {
+class JobPostingStudent {
 
     String companyName;
     String jobTitle;
     String jobDescripion;
     Long timestamp;
+    String email;
 
-    public JobPosting(String a, String b, String c, Long d){
+    public JobPostingStudent(String a, String b, String c, Long d, String e){
 
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
         this.timestamp = d;
+        this.email = e;
     }
 
 
-}*/
+}
 
 public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListener {
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
-    private ArrayList<JobPosting> jobs = new ArrayList<JobPosting>();
+    private ArrayList<JobPostingStudent> jobs = new ArrayList<JobPostingStudent>();
 
     private String TAG = "CompanyPage1";
 
@@ -81,12 +83,12 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
 
         applicationsRecyclerView = (RecyclerView) v.findViewById(R.id.applications_recycler_view);
         applicationsRecyclerView.setHasFixedSize(true);
-        layoutManager = new GridLayoutManager(getActivity(), 1);
+        layoutManager = new LinearLayoutManager(getActivity());
 
         applicationsRecyclerView.setLayoutManager(layoutManager);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        mAdapter = new MyAdapter(jobs, this);
+        mAdapter = new MyAdapter2(jobs);
         applicationsRecyclerView.setAdapter(mAdapter);
 
         db.collection("posts").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -109,12 +111,12 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
                             Map docData = new HashMap();
                             docData = documentChange.getDocument().getData();
                             System.out.println("ADDDD "+docData);
-                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), docData.get("companyEmail").toString());
+                            JobPostingStudent job = new JobPostingStudent(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), docData.get("companyEmail").toString());
 
                             jobs.add(job);
-                            jobs.sort(new Comparator<JobPosting>() {
+                            jobs.sort(new Comparator<JobPostingStudent>() {
                                 @Override
-                                public int compare(JobPosting o1, JobPosting o2) {
+                                public int compare(JobPostingStudent o1, JobPostingStudent o2) {
                                     return o2.timestamp.compareTo(o1.timestamp);
                                 }
                             });
