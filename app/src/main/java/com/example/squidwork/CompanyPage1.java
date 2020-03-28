@@ -45,20 +45,22 @@ class JobPosting {
     String companyName;
     String jobTitle;
     String jobDescripion;
+    String email;
     Long timestamp;
 
-    public JobPosting(String a, String b, String c, Long d){
+    public JobPosting(String a, String b, String c, Long d, String e){
 
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
         this.timestamp = d;
+        this.email = e;
     }
 
 
 }
 
-public class CompanyPage1 extends Fragment{
+public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListener {
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -88,8 +90,9 @@ public class CompanyPage1 extends Fragment{
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        mAdapter = new MyAdapter(jobs);
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        mAdapter = new MyAdapter(jobs, this);
+
         applicationsRecyclerView.setAdapter(mAdapter);
 
         db.collection("posts").whereEqualTo("companyEmail", currentUser.getEmail()).addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -112,7 +115,8 @@ public class CompanyPage1 extends Fragment{
                             Map docData = new HashMap();
                             docData = documentChange.getDocument().getData();
                             System.out.println("ADDDD "+docData);
-                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"));
+
+                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), currentUser.getEmail());
 
                             jobs.add(job);
                             jobs.sort(new Comparator<JobPosting>() {
@@ -174,4 +178,30 @@ public class CompanyPage1 extends Fragment{
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
+    @Override
+    public void onDeleteClick(final int position) {
+        System.out.println("Delete clicked: "+ position);
+        JobPosting job = jobs.get(position);
+        String postToDeleteID = job.email+"-"+job.timestamp.toString();
+        db.collection("posts").document(postToDeleteID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+
+                    jobs.remove(position);
+                    mAdapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "Delete post successfully", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    Log.d(TAG, "Delete task failed");
+                    Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+        });
+
+
+    }
 }

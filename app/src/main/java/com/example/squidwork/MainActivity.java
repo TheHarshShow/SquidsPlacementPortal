@@ -55,8 +55,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         signInButton = findViewById(R.id.sign_in_button);
+
         mAuth = FirebaseAuth.getInstance();
+
         // Access a Cloud Firestore instance from your Activity
+
         db = FirebaseFirestore.getInstance();
 
         signInButton.setVisibility(View.INVISIBLE);
@@ -83,8 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signInButton.setVisibility(View.INVISIBLE);
 
         final FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if(currentUser!=null) {
             DocumentReference userRef = db.collection("users").document(currentUser.getEmail());
+
             userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             Map docData = new HashMap();
                             docData = document.getData();
+
                             Log.d(TAG, "User exists! " + docData.get("type") + " " + docData.get("email"));
 
                             if (docData.get("type").equals("student")) {
@@ -119,7 +125,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Map<String, Object> userDoc = new HashMap<>();
                             userDoc.put("type", "notYetDecided");
                             userDoc.put("email", currentUser.getEmail());
+
                             Log.d(TAG, "User does not exist! " + userDoc);
+
                             db.collection("users").document(currentUser.getEmail()).set(userDoc);
 
                             startActivity(new Intent(MainActivity.this, NotYetDecidedPage.class));
@@ -192,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -215,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         final AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,30 +19,52 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<JobPosting> mDataset;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+
+        void onDeleteClick(int position);
+    }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
         public TextView companyNameTextView;
         public TextView jobTitleTextView;
         public TextView jobDescriptionTextView;
+        public Button deleteButton;
 
-        public MyViewHolder(View v) {
+
+        public MyViewHolder(View v, final OnItemClickListener listener) {
             super(v);
             companyNameTextView = v.findViewById(R.id.company_name);
             jobTitleTextView = v.findViewById(R.id.job_title);
             jobDescriptionTextView = v.findViewById(R.id.job_description);
+            deleteButton = v.findViewById(R.id.delete_button);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
         }
+
+
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public MyAdapter(ArrayList<JobPosting> jobs) {
+    public MyAdapter(ArrayList<JobPosting> jobs, OnItemClickListener setOnItemClickListener) {
 
-
+        this.mListener = setOnItemClickListener;
         this.mDataset = jobs;
         this.notifyDataSetChanged();
     }
@@ -56,7 +79,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.comany_page1_cell, null, false);
 
-        MyViewHolder vh = new MyViewHolder(v);
+        MyViewHolder vh = new MyViewHolder(v, mListener);
 //        System.out.println("HODOR");
         return vh;
     }
