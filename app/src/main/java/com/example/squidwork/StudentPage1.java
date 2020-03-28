@@ -40,27 +40,25 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-class JobPosting {
+/*class JobPosting {
 
     String companyName;
     String jobTitle;
     String jobDescripion;
-    String email;
     Long timestamp;
 
-    public JobPosting(String a, String b, String c, Long d, String e){
+    public JobPosting(String a, String b, String c, Long d){
 
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
         this.timestamp = d;
-        this.email = e;
     }
 
 
-}
+}*/
 
-public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListener {
+public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListener {
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -69,7 +67,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
 
     private String TAG = "CompanyPage1";
 
-    public CompanyPage1() {
+    public StudentPage1() {
         // Required empty public constructor
     }
 
@@ -78,7 +76,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_companypage1, container, false);
+        View v=inflater.inflate(R.layout.fragment_studentpage1, container, false);
 
 
         applicationsRecyclerView = (RecyclerView) v.findViewById(R.id.applications_recycler_view);
@@ -87,14 +85,11 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
 
         applicationsRecyclerView.setLayoutManager(layoutManager);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         mAdapter = new MyAdapter(jobs, this);
-
-
         applicationsRecyclerView.setAdapter(mAdapter);
 
-        db.collection("posts").whereEqualTo("companyEmail", currentUser.getEmail()).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("posts").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -114,8 +109,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
                             Map docData = new HashMap();
                             docData = documentChange.getDocument().getData();
                             System.out.println("ADDDD "+docData);
-
-                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), currentUser.getEmail());
+                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), docData.get("companyEmail").toString());
 
                             jobs.add(job);
                             jobs.sort(new Comparator<JobPosting>() {
@@ -140,7 +134,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
             }
         });
 
-        Button addPostingButton = (Button) v.findViewById(R.id.add_posting_button);
+       /* Button addPostingButton = (Button) v.findViewById(R.id.add_posting_button);
 
         addPostingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +145,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
 
             }
         });
-
+*/
 
 
         return v;
@@ -178,29 +172,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
     }
 
     @Override
-    public void onDeleteClick(final int position) {
-        System.out.println("Delete clicked: "+ position);
-        JobPosting job = jobs.get(position);
-        String postToDeleteID = job.email+"-"+job.timestamp.toString();
-        db.collection("posts").document(postToDeleteID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-
-                    jobs.remove(position);
-                    mAdapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "Delete post successfully", Toast.LENGTH_SHORT).show();
-
-                }else {
-
-                    Log.d(TAG, "Delete task failed");
-                    Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
-
-
-                }
-            }
-        });
-
-
+    public void onDeleteClick(int position) {
+        return;
     }
 }
