@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.d(TAG, "company");
 
                                 startActivity(new Intent(MainActivity.this, CompanyPage.class));
+                            } else if (docData.get("type").equals("CCD")){
+                                Log.d(TAG, "ccd");
+
+                                startActivity(new Intent(MainActivity.this, ccdPage.class));
+
                             }
 
 
@@ -261,6 +266,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                 Log.d(TAG, "company");
 
                                                 startActivity(new Intent(MainActivity.this, CompanyPage.class));
+                                            } else if(docData.get("type").equals("CCD")){
+                                                Log.d(TAG, "ccd");
+
+                                                startActivity(new Intent(MainActivity.this, ccdPage.class));
                                             }
 
 
