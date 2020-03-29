@@ -65,7 +65,7 @@ public class AddPostingFormPage extends AppCompatActivity {
                     Map postDesc = new HashMap();
 
                     final Long tsLong = System.currentTimeMillis();
-
+                    postDesc.put("approvalStatus" ,"Waiting");
                     postDesc.put("companyName", nameTextView.getText().toString());
                     postDesc.put("jobTitle", jobTextView.getText().toString());
                     postDesc.put("jobDescription", descriptionTextView.getText().toString());

@@ -46,10 +46,11 @@ class JobPosting {
     String jobTitle;
     String jobDescripion;
     String email;
+    String approvalStatus;
     Long timestamp;
 
     public JobPosting(String a, String b, String c, Long d, String e){
-
+        this.approvalStatus = "Waiting";
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
@@ -66,7 +67,6 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<JobPosting> jobs = new ArrayList<JobPosting>();
-
     private String TAG = "CompanyPage1";
 
     public CompanyPage1() {

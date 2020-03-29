@@ -91,7 +91,7 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
         mAdapter = new MyAdapter2(jobs);
         applicationsRecyclerView.setAdapter(mAdapter);
 
-        db.collection("posts").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("posts").whereEqualTo("approvalStatus","Approved").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

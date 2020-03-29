@@ -34,6 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView companyNameTextView;
         public TextView jobTitleTextView;
         public TextView jobDescriptionTextView;
+        public TextView approvalStatusTextView;
         public Button deleteButton;
 
 
@@ -42,6 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             companyNameTextView = v.findViewById(R.id.company_name);
             jobTitleTextView = v.findViewById(R.id.job_title);
             jobDescriptionTextView = v.findViewById(R.id.job_description);
+            approvalStatusTextView = v.findViewById(R.id.approval_status);
             deleteButton = v.findViewById(R.id.delete_button);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,6 +96,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.companyNameTextView.setText(mDataset.get(position).companyName);
         holder.jobTitleTextView.setText(mDataset.get(position).jobTitle);
         holder.jobDescriptionTextView.setText(mDataset.get(position).jobDescripion);
+        holder.approvalStatusTextView.setText(mDataset.get(position).approvalStatus);
 
     }
 
