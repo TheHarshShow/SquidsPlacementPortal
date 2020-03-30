@@ -40,7 +40,11 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-class JobPostingStudent {
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+class JobPostingStudent implements Parcelable{
 
     String companyName;
     String jobTitle;
@@ -58,9 +62,51 @@ class JobPostingStudent {
     }
 
 
+    protected JobPostingStudent(Parcel in) {
+        companyName = in.readString();
+        jobTitle = in.readString();
+        jobDescripion = in.readString();
+        if (in.readByte() == 0) {
+            timestamp = null;
+        } else {
+            timestamp = in.readLong();
+        }
+        email = in.readString();
+    }
+
+    public static final Creator<JobPostingStudent> CREATOR = new Creator<JobPostingStudent>() {
+        @Override
+        public JobPostingStudent createFromParcel(Parcel in) {
+            return new JobPostingStudent(in);
+        }
+
+        @Override
+        public JobPostingStudent[] newArray(int size) {
+            return new JobPostingStudent[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(companyName);
+        dest.writeString(jobTitle);
+        dest.writeString(jobDescripion);
+        if (timestamp == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(timestamp);
+        }
+        dest.writeString(email);
+    }
 }
 
-public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListener {
+public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListener, MyAdapter2.OnNoteListener{
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -88,7 +134,7 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
         applicationsRecyclerView.setLayoutManager(layoutManager);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        mAdapter = new MyAdapter2(jobs);
+        mAdapter = new MyAdapter2(jobs,this);
         applicationsRecyclerView.setAdapter(mAdapter);
 
         db.collection("posts").whereEqualTo("approvalStatus","Approved").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -177,4 +223,15 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
     public void onDeleteClick(int position) {
         return;
     }
+
+    @Override
+    public void onNoteClick(int position) {
+
+        Log.d(TAG, "onNoteClick: clicked." + position);
+
+        Intent intent = new Intent(getActivity(),NewActivity.class);
+        intent.putExtra("selected job", jobs.get(position));
+        startActivity(intent);
+    }
+
 }

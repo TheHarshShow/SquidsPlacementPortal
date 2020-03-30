@@ -16,6 +16,7 @@
         <activity android:name=".CompanyPage" />
         <activity android:name=".NotYetDecidedPage" />
         <activity android:name=".StudentPage" />
+        <activity android:name=".NewActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
