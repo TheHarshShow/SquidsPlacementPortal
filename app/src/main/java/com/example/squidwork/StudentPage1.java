@@ -112,7 +112,6 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
                             docData = documentChange.getDocument().getData();
                             System.out.println("ADDDD "+docData);
                             JobPostingStudent job = new JobPostingStudent(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), docData.get("companyEmail").toString());
-
                             jobs.add(job);
                             jobs.sort(new Comparator<JobPostingStudent>() {
                                 @Override
@@ -135,19 +134,6 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
 
             }
         });
-
-       /* Button addPostingButton = (Button) v.findViewById(R.id.add_posting_button);
-
-        addPostingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                System.out.println("NENENE");
-                startActivity(new Intent(CompanyPage1.this.getActivity(), AddPostingFormPage.class));
-
-            }
-        });
-*/
 
 
         return v;
