@@ -36,6 +36,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,10 +47,11 @@ class JobPosting {
     String jobTitle;
     String jobDescripion;
     String email;
+    String approvalStatus;
     Long timestamp;
 
-    public JobPosting(String a, String b, String c, Long d, String e){
-
+    public JobPosting(String a, String b, String c, Long d, String e,String app){
+        this.approvalStatus = app;
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
@@ -58,6 +60,9 @@ class JobPosting {
     }
 
 
+    public void setApprovalStatus(String approved) {
+        this.approvalStatus=approved;
+    }
 }
 
 public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListener {
@@ -66,7 +71,6 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<JobPosting> jobs = new ArrayList<JobPosting>();
-
     private String TAG = "CompanyPage1";
 
     public CompanyPage1() {
@@ -105,8 +109,8 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
 
                 }
                 System.out.println("TADADAAA");
-
-
+                System.out.println(queryDocumentSnapshots.getDocumentChanges());
+                System.out.println("TADADAAA44444444444444444444444444444444");
                 for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
                     switch (documentChange.getType()) {
                         case ADDED:
@@ -114,8 +118,11 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
                             Map docData = new HashMap();
                             docData = documentChange.getDocument().getData();
                             System.out.println("ADDDD "+docData);
-
-                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), currentUser.getEmail());
+                            String status=docData.get("approvalStatus").toString();
+                            if(status==null){
+                                status="Waiting";
+                            }
+                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), currentUser.getEmail(), status);
 
                             jobs.add(job);
                             jobs.sort(new Comparator<JobPosting>() {
@@ -129,9 +136,40 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
 
                             break;
                         case MODIFIED:
-
+                            //Map docData = new HashMap();
+                            docData = documentChange.getDocument().getData();
+                            System.out.println("777777777777777777777777777777777777777777777777777777777777777777777777777777777");
+                            System.out.println("MODDDDD"+docData);
+                            int i = 0;
+                            for(JobPosting j : jobs){
+                                if(j.timestamp.toString().equals(docData.get("timeStamp").toString())){
+                                    System.out.println("9999999999999999999999999999999999999999999999999999777");
+                                    jobs.set(i,new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"),docData.get("companyEmail").toString(), docData.get("approvalStatus").toString()));
+                                    System.out.println(jobs.get(i));
+                                    JobPosting p =jobs.get(i);
+                                    System.out.println(p.approvalStatus);
+                                }
+                            i++;
+                            }
+                            mAdapter.notifyDataSetChanged();
                             break;
                         case REMOVED:
+                            docData = documentChange.getDocument().getData();
+                            System.out.println("DDD"+docData);
+                            //docData = documentChange.getDocument().getData();
+                            System.out.println("777777777777777777777777777777777777777777777777777777777777777777777777777777777");
+                            System.out.println("DDDDD"+docData);
+                            int k = 0;
+
+                            for(JobPosting j : jobs){
+                                if(j.timestamp.toString().equals(docData.get("timeStamp").toString())){
+                                    System.out.println("maa-chod-di");
+                                    jobs.remove(k);
+                                    break;
+                                }
+                                k++;
+                            }
+                            mAdapter.notifyDataSetChanged();
 
                             break;
                     }

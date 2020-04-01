@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.Button;
@@ -31,8 +30,6 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -40,20 +37,17 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
-class JobPostingStudent implements Parcelable{
+class JobPostingCCD {
 
     String companyName;
     String jobTitle;
     String jobDescripion;
-    Long timestamp;
     String email;
+    String approvalStatus;
+    Long timestamp;
 
-    public JobPostingStudent(String a, String b, String c, Long d, String e){
-
+    public JobPostingCCD(String a, String b, String c, Long d, String e, String app){
+        this.approvalStatus = app;
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
@@ -62,60 +56,20 @@ class JobPostingStudent implements Parcelable{
     }
 
 
-    protected JobPostingStudent(Parcel in) {
-        companyName = in.readString();
-        jobTitle = in.readString();
-        jobDescripion = in.readString();
-        if (in.readByte() == 0) {
-            timestamp = null;
-        } else {
-            timestamp = in.readLong();
-        }
-        email = in.readString();
-    }
-
-    public static final Creator<JobPostingStudent> CREATOR = new Creator<JobPostingStudent>() {
-        @Override
-        public JobPostingStudent createFromParcel(Parcel in) {
-            return new JobPostingStudent(in);
-        }
-
-        @Override
-        public JobPostingStudent[] newArray(int size) {
-            return new JobPostingStudent[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(companyName);
-        dest.writeString(jobTitle);
-        dest.writeString(jobDescripion);
-        if (timestamp == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(timestamp);
-        }
-        dest.writeString(email);
+    public void setApprovalStatus(String approved) {
+        this.approvalStatus = approved;
     }
 }
 
-public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListener, MyAdapter2.OnNoteListener{
+public class ccdPage1 extends Fragment implements MyAdapter3.OnItemClickListener {
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter mAdapter;
-    private ArrayList<JobPostingStudent> jobs = new ArrayList<JobPostingStudent>();
-
+    private RecyclerView.Adapter<MyAdapter3.MyViewHolder> mAdapter;
+    private ArrayList<JobPosting> jobs = new ArrayList<JobPosting>();
     private String TAG = "CompanyPage1";
 
-    public StudentPage1() {
+    public ccdPage1() {
         // Required empty public constructor
     }
 
@@ -124,20 +78,23 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_studentpage1, container, false);
+        View v=inflater.inflate(R.layout.fragment_ccdpage1, container, false);
 
 
         applicationsRecyclerView = (RecyclerView) v.findViewById(R.id.applications_recycler_view);
         applicationsRecyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager = new GridLayoutManager(getActivity(), 1);
 
         applicationsRecyclerView.setLayoutManager(layoutManager);
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        mAdapter = new MyAdapter2(jobs,this);
+
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        mAdapter = new MyAdapter3(jobs, this);
+
+
         applicationsRecyclerView.setAdapter(mAdapter);
 
-        db.collection("posts").whereEqualTo("approvalStatus","Approved").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("posts").whereEqualTo("approvalStatus","Waiting").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -157,11 +114,13 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
                             Map docData = new HashMap();
                             docData = documentChange.getDocument().getData();
                             System.out.println("ADDDD "+docData);
-                            JobPostingStudent job = new JobPostingStudent(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), docData.get("companyEmail").toString());
+
+                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"),docData.get("companyEmail").toString(),docData.get("approvalStatus").toString());
+
                             jobs.add(job);
-                            jobs.sort(new Comparator<JobPostingStudent>() {
+                            jobs.sort(new Comparator<JobPosting>() {
                                 @Override
-                                public int compare(JobPostingStudent o1, JobPostingStudent o2) {
+                                public int compare(JobPosting o1, JobPosting o2) {
                                     return o2.timestamp.compareTo(o1.timestamp);
                                 }
                             });
@@ -180,6 +139,19 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
 
             }
         });
+
+        Button addPostingButton = (Button) v.findViewById(R.id.add_posting_button);
+
+        addPostingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                System.out.println("NENENE");
+                startActivity(new Intent(ccdPage1.this.getActivity(), AddPostingFormPage.class));
+
+            }
+        });
+
 
 
         return v;
@@ -206,18 +178,67 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
     }
 
     @Override
-    public void onDeleteClick(int position) {
-        return;
+    public void onDeleteClick(final int position) {
+        System.out.println("Delete clicked: "+ position);
+        JobPosting job = jobs.get(position);
+        String postToDeleteID = job.email+"-"+job.timestamp.toString();
+        db.collection("posts").document(postToDeleteID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+
+                    jobs.remove(position);
+                    mAdapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "Delete post successfully", Toast.LENGTH_SHORT).show();
+
+                }else {
+
+                    Log.d(TAG, "Delete task failed");
+                    Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+        });
+
+
     }
 
-    @Override
-    public void onNoteClick(int position) {
+    public void onUpdateClick(final int position){
+        System.out.println("Approved clicked: "+ position);
+        JobPosting job = jobs.get(position);
+        String postToUpdateID = job.email+"-"+job.timestamp.toString();
+        Map<String, Object> postDesc = new HashMap<String, Object>();
+        System.out.println(postToUpdateID);
+        System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+        final Long tsLong = System.currentTimeMillis();
+        postDesc.put("approvalStatus" ,"Approved");
+        postDesc.put("companyName", job.companyName);
+        postDesc.put("jobTitle", job.jobTitle);
+        postDesc.put("jobDescription", job.jobDescripion);
+        postDesc.put("timeStamp", job.timestamp);
+        postDesc.put("companyEmail", job.email);
+        System.out.println(postDesc);
+        System.out.println("999999999999999999999999");
+        System.out.println(job);
+        db.collection("posts").document(postToUpdateID).set(postDesc).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
 
-        Log.d(TAG, "onNoteClick: clicked." + position);
+                    jobs.get(position).setApprovalStatus("Approved");
+                    jobs.remove(position);
+                    mAdapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "Approved successfully", Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(getActivity(),NewActivity.class);
-        intent.putExtra("selected job", jobs.get(position));
-        startActivity(intent);
+                }else {
+
+                    Log.d(TAG, "Approving task failed");
+                    Toast.makeText(getActivity(), "Approving Failed", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+        });
     }
-
 }

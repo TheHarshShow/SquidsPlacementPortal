@@ -31,6 +31,7 @@ public class NotYetDecidedPage extends AppCompatActivity implements View.OnClick
     private Button signOutButton;
     private Button studentChoiceButton;
     private Button companyChoiceButton;
+    private Button ccdChoiceButton;
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -49,10 +50,12 @@ public class NotYetDecidedPage extends AppCompatActivity implements View.OnClick
         signOutButton = findViewById(R.id.sign_out_button);
         studentChoiceButton = findViewById(R.id.student_choice_button);
         companyChoiceButton = findViewById(R.id.company_choice_button);
+        ccdChoiceButton = findViewById(R.id.ccd_choice_button);
 
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.student_choice_button).setOnClickListener(this);
         findViewById(R.id.company_choice_button).setOnClickListener(this);
+        findViewById(R.id.ccd_choice_button).setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("863011320660-r32ro0lja4pjlu758sakd2ek25oio8fl.apps.googleusercontent.com").requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -148,6 +151,52 @@ public class NotYetDecidedPage extends AppCompatActivity implements View.OnClick
                                             Map<String, Object> docData = new HashMap();
                                             docData = document.getData();
                                             docData.replace("type", "company");
+                                            db.collection("users").document(currentUser.getEmail()).set(docData);
+                                            finish();
+
+                                        }
+
+
+                                    } else {
+                                        Log.d(TAG, "Document not found");
+                                        Map<String, Object> userDoc = new HashMap<>();
+                                        userDoc.put("type", "company");
+                                        userDoc.put("email", currentUser.getEmail());
+                                        Log.d(TAG, "User does not exist! " + userDoc);
+                                        db.collection("users").document(currentUser.getEmail()).set(userDoc);
+
+                                        finish();
+
+                                    }
+                                }
+                            }
+
+                    );
+
+                } else {
+
+                    finish();
+
+                }
+                break;
+
+            case R.id.ccd_choice_button:
+                if(currentUser!=null){
+
+                    DocumentReference userRef = db.collection("users").document(currentUser.getEmail());
+                    userRef.get().addOnCompleteListener(
+                            new OnCompleteListener<DocumentSnapshot>() {
+                                @RequiresApi(api = Build.VERSION_CODES.N)
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                    if(task.isSuccessful()){
+                                        DocumentSnapshot document = task.getResult();
+                                        if(document.exists()){
+
+                                            Map<String, Object> docData = new HashMap();
+                                            docData = document.getData();
+                                            docData.replace("type", "CCD");
                                             db.collection("users").document(currentUser.getEmail()).set(docData);
                                             finish();
 
