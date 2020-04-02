@@ -151,7 +151,7 @@ public class ccdPage1 extends Fragment implements MyAdapter3.OnItemClickListener
             public void onClick(View v) {
 
                 System.out.println("NENENE");
-                startActivity(new Intent(ccdPage1.this.getActivity(), AddPostingFormPage.class));
+                startActivity(new Intent(ccdPage1.this.getActivity(), Posting_add_through_ccd.class));
 
             }
         });

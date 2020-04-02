@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ccdPage"></activity>
+        <activity android:name=".Posting_add_through_ccd"></activity>
+        <activity android:name=".ccdPage" />
         <activity android:name=".AddPostingFormPage" />
         <activity android:name=".CompanyPage" />
         <activity android:name=".NotYetDecidedPage" />
