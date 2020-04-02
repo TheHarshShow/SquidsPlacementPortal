@@ -4,16 +4,12 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -41,7 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public MyViewHolder(View v, final OnItemClickListener listener) {
             super(v);
             companyNameTextView = v.findViewById(R.id.company_name);
-            jobTitleTextView = v.findViewById(R.id.job_title);
+            jobTitleTextView = v.findViewById(R.id.job_title_text_view);
             jobDescriptionTextView = v.findViewById(R.id.job_description);
             approvalStatusTextView = v.findViewById(R.id.approval_status);
             deleteButton = v.findViewById(R.id.delete_button);

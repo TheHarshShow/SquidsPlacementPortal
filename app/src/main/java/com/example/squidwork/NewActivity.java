@@ -21,7 +21,7 @@ public class NewActivity extends AppCompatActivity {
         setContentView(R.layout.student_job_show);
         Log.d(TAG, "onCreate: created");
         mcompany_name=findViewById(R.id.company_name);
-        mjob_title=findViewById(R.id.job_title);
+        mjob_title=findViewById(R.id.job_title_text_view);
         mjob_description=findViewById(R.id.job_description);
 
         if(getIntent().hasExtra("selected job")) {

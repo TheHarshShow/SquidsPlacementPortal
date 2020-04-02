@@ -108,9 +108,11 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
                     return;
 
                 }
-                System.out.println("TADADAAA");
+
+
+
                 System.out.println(queryDocumentSnapshots.getDocumentChanges());
-                System.out.println("TADADAAA44444444444444444444444444444444");
+
                 for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
                     switch (documentChange.getType()) {
                         case ADDED:
@@ -225,8 +227,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
 
-                    jobs.remove(position);
-                    mAdapter.notifyDataSetChanged();
+//                    jobs.remove(position);
                     Toast.makeText(getActivity(), "Delete post successfully", Toast.LENGTH_SHORT).show();
 
                 }else {

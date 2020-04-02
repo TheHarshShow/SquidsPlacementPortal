@@ -1,30 +1,16 @@
 package com.example.squidwork;
 
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MyAdapter3 extends RecyclerView.Adapter<MyAdapter3.MyViewHolder> {
 
@@ -53,7 +39,7 @@ public class MyAdapter3 extends RecyclerView.Adapter<MyAdapter3.MyViewHolder> {
         public MyViewHolder(View v, final OnItemClickListener listener) {
             super(v);
             companyNameTextView = v.findViewById(R.id.company_name);
-            jobTitleTextView = v.findViewById(R.id.job_title);
+            jobTitleTextView = v.findViewById(R.id.job_title_text_view);
             jobDescriptionTextView = v.findViewById(R.id.job_description);
             approvalStatusTextView = v.findViewById(R.id.approval_status);
             deleteButton = v.findViewById(R.id.delete_button);

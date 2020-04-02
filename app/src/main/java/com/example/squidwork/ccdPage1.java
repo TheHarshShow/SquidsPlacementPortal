@@ -67,7 +67,7 @@ public class ccdPage1 extends Fragment implements MyAdapter3.OnItemClickListener
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter<MyAdapter3.MyViewHolder> mAdapter;
     private ArrayList<JobPosting> jobs = new ArrayList<JobPosting>();
-    private String TAG = "CompanyPage1";
+    private String TAG = "ccdPage1";
 
     public ccdPage1() {
         // Required empty public constructor
@@ -78,6 +78,10 @@ public class ccdPage1 extends Fragment implements MyAdapter3.OnItemClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+        Log.d(TAG, "view created");
+
         View v=inflater.inflate(R.layout.fragment_ccdpage1, container, false);
 
 

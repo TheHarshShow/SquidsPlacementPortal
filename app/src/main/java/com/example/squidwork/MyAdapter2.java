@@ -26,7 +26,7 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
         public MyViewHolder(View v,OnNoteListener onNoteListener) {
             super(v);
             companyNameTextView = v.findViewById(R.id.company_name);
-            jobTitleTextView = v.findViewById(R.id.job_title);
+            jobTitleTextView = v.findViewById(R.id.job_title_text_view);
             jobDescriptionTextView = v.findViewById(R.id.job_description);
 
             this.onNoteListener=onNoteListener;
