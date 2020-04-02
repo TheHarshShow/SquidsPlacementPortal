@@ -3,6 +3,8 @@ package com.example.squidwork;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,13 +34,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 
-class StudentApplicationCCD {
+class StudentApplicationCCD implements Serializable {
 
     String studentName;
     String studentEmail;
@@ -69,13 +72,10 @@ class StudentApplicationCCD {
     }
 
 
-    public void setApprovalStatus(String approved) {
-        this.approvalStatus = approved;
-    }
 }
 
 
-public class ccdPage2 extends Fragment{
+public class ccdPage2 extends Fragment implements MyAdapter4.OnNoteListener{
 
     private RecyclerView studentApplicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -110,7 +110,7 @@ public class ccdPage2 extends Fragment{
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         final FirebaseUser currentUser = mAuth.getCurrentUser();
-        mAdapter = new MyAdapter4(applications);
+        mAdapter = new MyAdapter4(applications, this);
 
         studentApplicationsRecyclerView.setAdapter(mAdapter);
 
@@ -273,4 +273,12 @@ public class ccdPage2 extends Fragment{
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
+    @Override
+    public void onNoteClick(int position) {
+        Log.d(TAG, "onNoteClick: clicked." + position);
+
+        Intent intent = new Intent(getActivity(),ShowApplicationActivity.class);
+        intent.putExtra("selected job", applications.get(position));
+        startActivity(intent);
+    }
 }

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class NewActivity extends AppCompatActivity {
+public class ShowJobActivity extends AppCompatActivity {
 
     private static final String TAG = "NewActivity";
     private TextView mcompany_name,mjob_title,mjob_description;
@@ -39,7 +39,7 @@ public class NewActivity extends AppCompatActivity {
 
                 Log.d(TAG, "onClick: Apply Button Clicked");
                 JobPostingStudent job = getIntent().getParcelableExtra("selected job");
-                Intent intent = new Intent(NewActivity.this,ApplyForm.class);
+                Intent intent = new Intent(ShowJobActivity.this,ApplyForm.class);
                 intent.putExtra("selected job", job);
                 startActivity(intent);
                 //startActivity(new Intent(getActivity(), AddPostingFormPage.class));

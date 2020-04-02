@@ -1,6 +1,7 @@
 package com.example.squidwork;
 
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyAdapter4 extends RecyclerView.Adapter<MyAdapter4.MyViewHolder>  {
 
     private ArrayList<StudentApplicationCCD> mDataset;
+    private MyAdapter4.OnNoteListener mOnNoteListener;
+
+    public interface OnNoteListener{
+        void onNoteClick(int position);
+    }
+
+
+
 //    private MyAdapter.OnItemClickListener mListener;
 
 //    public interface OnItemClickListener {
@@ -26,7 +35,8 @@ public class MyAdapter4 extends RecyclerView.Adapter<MyAdapter4.MyViewHolder>  {
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private static final String TAG = "myadapter4 view holder";
         // each data item is just a string in this case
 
         public TextView studentNameTextView;
@@ -34,11 +44,11 @@ public class MyAdapter4 extends RecyclerView.Adapter<MyAdapter4.MyViewHolder>  {
         public TextView jobTitleTextView;
         public TextView companyNameTextView;
         public TextView companyEmailTextView;
+        OnNoteListener onNoteListener;
 
 
 
-
-        public MyViewHolder(View v) {
+        public MyViewHolder(View v, MyAdapter4.OnNoteListener onNoteListener) {
             super(v);
             this.studentNameTextView = v.findViewById(R.id.student_name_text_view);
             this.studentEmailTextView = v.findViewById(R.id.student_email_text_view);
@@ -46,6 +56,15 @@ public class MyAdapter4 extends RecyclerView.Adapter<MyAdapter4.MyViewHolder>  {
             this.companyNameTextView = v.findViewById(R.id.company_name_text_view);
             this.companyEmailTextView = v.findViewById(R.id.company_email_text_view);
 
+            this.onNoteListener = onNoteListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d(TAG, "click heard");
+            onNoteListener.onNoteClick(getAdapterPosition());
         }
 
     }
@@ -55,9 +74,10 @@ public class MyAdapter4 extends RecyclerView.Adapter<MyAdapter4.MyViewHolder>  {
     // Provide a suitable constructor (depends on the kind of dataset)
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public MyAdapter4(ArrayList<StudentApplicationCCD> applications) {
+    public MyAdapter4(ArrayList<StudentApplicationCCD> applications, MyAdapter4.OnNoteListener onNoteListener) {
 
         this.mDataset = applications;
+        this.mOnNoteListener = onNoteListener;
         this.notifyDataSetChanged();
     }
 
@@ -71,7 +91,7 @@ public class MyAdapter4 extends RecyclerView.Adapter<MyAdapter4.MyViewHolder>  {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ccd_page2_cell, null, false);
 
-        MyAdapter4.MyViewHolder vh = new MyAdapter4.MyViewHolder(v);
+        MyAdapter4.MyViewHolder vh = new MyAdapter4.MyViewHolder(v, mOnNoteListener);
 //        System.out.println("HODOR");
         return vh;
     }

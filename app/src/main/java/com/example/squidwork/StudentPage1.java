@@ -106,7 +106,7 @@ class JobPostingStudent implements Parcelable{
     }
 }
 
-public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListener, MyAdapter2.OnNoteListener{
+public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener{
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -205,17 +205,14 @@ public class StudentPage1 extends Fragment implements MyAdapter.OnItemClickListe
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
-    @Override
-    public void onDeleteClick(int position) {
-        return;
-    }
+
 
     @Override
     public void onNoteClick(int position) {
 
         Log.d(TAG, "onNoteClick: clicked." + position);
 
-        Intent intent = new Intent(getActivity(),NewActivity.class);
+        Intent intent = new Intent(getActivity(),ShowJobActivity.class);
         intent.putExtra("selected job", jobs.get(position));
         startActivity(intent);
     }

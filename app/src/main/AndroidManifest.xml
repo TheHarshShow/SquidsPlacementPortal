@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.squidwork">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Posting_add_through_ccd"></activity>
+        <activity android:name=".ShowApplicationActivity"></activity>
+        <activity android:name=".Posting_add_through_ccd" />
         <activity android:name=".ccdPage" />
         <activity android:name=".AddPostingFormPage" />
         <activity android:name=".CompanyPage" />
         <activity android:name=".NotYetDecidedPage" />
         <activity android:name=".StudentPage" />
-        <activity android:name=".NewActivity" />
+        <activity android:name=".ShowJobActivity" />
         <activity android:name=".ApplyForm" />
         <activity
             android:name=".MainActivity"
@@ -30,5 +29,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
