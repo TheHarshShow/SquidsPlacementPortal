@@ -143,27 +143,62 @@ public class ShowApplicationActivity extends AppCompatActivity {
                 Log.d(TAG, "Reject Button Clicked");
 
 
-                db.collection("application").document(sac.id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                db.collection("application").document(sac.id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        if(task.isSuccessful()){
-
-                            Log.d(TAG, "Application delete successful");
-                            Toast.makeText(ShowApplicationActivity.this, "Successfully accepted application", Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
 
-                            finish();
+                        if (task.isSuccessful()){
+
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            if(documentSnapshot.exists()){
+
+                                Map docData = new HashMap();
+                                docData = documentSnapshot.getData();
 
 
-                        } else {
+                                docData.replace("approvalStatus", "Rejected By CCD");
 
-                            Log.d(TAG, "Application delete failed");
-                            Toast.makeText(ShowApplicationActivity.this, "Application Rejection Failed!", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "status replaced");
 
+                                db.collection("application").document(sac.id).set(docData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if(task.isSuccessful()){
+
+                                            Toast.makeText(ShowApplicationActivity.this, "Rejected accepted application", Toast.LENGTH_SHORT).show();
+
+
+                                            finish();
+
+                                        } else {
+
+
+                                            Toast.makeText(ShowApplicationActivity.this, "Application rejection unsuccessful", Toast.LENGTH_SHORT).show();
+
+
+                                        }
+
+                                    }
+                                });
+
+
+
+
+
+                            } else {
+
+                                Log.d(TAG, "application does not exist");
+
+                            }
+
+                        } else{
+
+                            Log.d(TAG, "could not fetch document to reject");
 
                         }
-
                     }
                 });
 
