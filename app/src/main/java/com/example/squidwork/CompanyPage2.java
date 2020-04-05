@@ -113,7 +113,7 @@ public class CompanyPage2 extends Fragment implements MyAdapter5.OnNoteListener{
 
         applicationsRecyclerView.setAdapter(mAdapter);
 
-        db.collection("application").whereEqualTo("approvalStatus", "Approved By CCD").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("application").whereEqualTo("approvalStatus", "Approved By CCD").whereEqualTo("companyEmail", currentUser.getEmail()).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
