@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+//Company Page 1
+
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<JobPosting> mDataset;
@@ -36,9 +39,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public MyViewHolder(View v, final OnItemClickListener listener) {
             super(v);
-            companyNameTextView = v.findViewById(R.id.company_name);
+            companyNameTextView = v.findViewById(R.id.company_name_text_view);
             jobTitleTextView = v.findViewById(R.id.job_title_text_view);
-            jobDescriptionTextView = v.findViewById(R.id.job_description);
+            jobDescriptionTextView = v.findViewById(R.id.job_description_text_view);
             approvalStatusTextView = v.findViewById(R.id.approval_status);
             deleteButton = v.findViewById(R.id.delete_button);
             deleteButton.setOnClickListener(new View.OnClickListener() {

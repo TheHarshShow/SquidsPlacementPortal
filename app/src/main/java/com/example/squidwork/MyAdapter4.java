@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+//CCD page 2
+
 public class MyAdapter4 extends RecyclerView.Adapter<MyAdapter4.MyViewHolder>  {
 
     private ArrayList<StudentApplicationCCD> mDataset;

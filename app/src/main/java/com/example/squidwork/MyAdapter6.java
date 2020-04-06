@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+//Student page 2
+
 public class MyAdapter6 extends RecyclerView.Adapter<MyAdapter6.MyViewHolder>  {
 
     private ArrayList<ApplicationToLoad> mDataset;

@@ -36,7 +36,7 @@ public class ApplyForm extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
 
-        Button applyButton = (Button) findViewById(R.id.apply_button);
+        Button applyButton = (Button) findViewById(R.id.approve_button);
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

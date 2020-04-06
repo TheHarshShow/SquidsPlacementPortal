@@ -32,12 +32,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-class JobPostingCCD {
+class JobPostingCCD implements Serializable {
 
     String companyName;
     String jobTitle;
@@ -45,28 +46,27 @@ class JobPostingCCD {
     String email;
     String approvalStatus;
     Long timestamp;
+    String url;
 
-    public JobPostingCCD(String a, String b, String c, Long d, String e, String app){
+    public JobPostingCCD(String a, String b, String c, Long d, String e, String app, String f){
         this.approvalStatus = app;
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
         this.timestamp = d;
         this.email = e;
+        this.url = f;
     }
 
 
-    public void setApprovalStatus(String approved) {
-        this.approvalStatus = approved;
-    }
 }
 
-public class ccdPage1 extends Fragment implements MyAdapter3.OnItemClickListener {
+public class ccdPage1 extends Fragment implements MyAdapter3.OnNoteListener {
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter<MyAdapter3.MyViewHolder> mAdapter;
-    private ArrayList<JobPosting> jobs = new ArrayList<JobPosting>();
+    private ArrayList<JobPostingCCD> jobs = new ArrayList<JobPostingCCD>();
     private String TAG = "ccdPage1";
 
     public ccdPage1() {
@@ -113,31 +113,92 @@ public class ccdPage1 extends Fragment implements MyAdapter3.OnItemClickListener
 
                 for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
                     switch (documentChange.getType()) {
-                        case ADDED:
+                        case ADDED:{
 
                             Map docData = new HashMap();
                             docData = documentChange.getDocument().getData();
                             System.out.println("ADDDD "+docData);
 
-                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"),docData.get("companyEmail").toString(),docData.get("approvalStatus").toString());
+                            JobPostingCCD job = new JobPostingCCD(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"),docData.get("companyEmail").toString(),docData.get("approvalStatus").toString(), docData.get("brochureURL").toString());
 
                             jobs.add(job);
-                            jobs.sort(new Comparator<JobPosting>() {
+                            jobs.sort(new Comparator<JobPostingCCD>() {
                                 @Override
-                                public int compare(JobPosting o1, JobPosting o2) {
+                                public int compare(JobPostingCCD o1, JobPostingCCD o2) {
                                     return o2.timestamp.compareTo(o1.timestamp);
                                 }
                             });
 
                             mAdapter.notifyDataSetChanged();
 
-                            break;
-                        case MODIFIED:
+                            break;}
+                        case MODIFIED:{
 
-                            break;
-                        case REMOVED:
+                            Map docData = new HashMap();
+                            docData = documentChange.getDocument().getData();
 
-                            break;
+                            String ID=documentChange.getDocument().getId();
+
+                            for(JobPostingCCD job:jobs){
+
+
+                                if(ID.equals(job.email+"-"+job.timestamp.toString())){
+
+                                    job.companyName = docData.get("companyName").toString();
+                                    job.jobTitle = docData.get("jobTitle").toString();
+                                    job.jobDescripion = docData.get("jobDescription").toString();
+                                    job.timestamp = (Long) docData.get("timeStamp");
+                                    job.email = docData.get("companyEmail").toString();
+                                    job.approvalStatus = docData.get("approvalStatus").toString();
+                                    job.url = docData.get("brochureURL").toString();
+                                    break;
+
+                                }
+
+
+
+
+                            }
+                            jobs.sort(new Comparator<JobPostingCCD>() {
+                                @Override
+                                public int compare(JobPostingCCD o1, JobPostingCCD o2) {
+                                    return o2.timestamp.compareTo(o1.timestamp);
+                                }
+                            });
+
+                            mAdapter.notifyDataSetChanged();
+
+
+                            break;}
+                        case REMOVED:{
+
+                            Map docData = new HashMap();
+                            docData = documentChange.getDocument().getData();
+                            String ID=documentChange.getDocument().getId();
+
+                            for(JobPostingCCD job:jobs){
+
+
+                                if(ID.equals(job.email+"-"+job.timestamp.toString())){
+
+                                    jobs.remove(job);
+                                    break;
+
+                                }
+
+
+
+
+                            }
+                            jobs.sort(new Comparator<JobPostingCCD>() {
+                                @Override
+                                public int compare(JobPostingCCD o1, JobPostingCCD o2) {
+                                    return o2.timestamp.compareTo(o1.timestamp);
+                                }
+                            });
+                            mAdapter.notifyDataSetChanged();
+
+                            break;}
                     }
                 }
 
@@ -181,68 +242,18 @@ public class ccdPage1 extends Fragment implements MyAdapter3.OnItemClickListener
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
+
     @Override
-    public void onDeleteClick(final int position) {
-        System.out.println("Delete clicked: "+ position);
-        JobPosting job = jobs.get(position);
-        String postToDeleteID = job.email+"-"+job.timestamp.toString();
-        db.collection("posts").document(postToDeleteID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+    public void onNoteClick(int position) {
 
-                    jobs.remove(position);
-                    mAdapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "Delete post successfully", Toast.LENGTH_SHORT).show();
+        JobPostingCCD job = jobs.get(position);
 
-                }else {
+        Intent intent = new Intent(getActivity(), ShowJobToCCD.class);
+        intent.putExtra("job to show", job);
 
-                    Log.d(TAG, "Delete task failed");
-                    Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
 
+//        return;
 
-                }
-            }
-        });
-
-
-    }
-
-    public void onUpdateClick(final int position){
-        System.out.println("Approved clicked: "+ position);
-        JobPosting job = jobs.get(position);
-        String postToUpdateID = job.email+"-"+job.timestamp.toString();
-        Map<String, Object> postDesc = new HashMap<String, Object>();
-        System.out.println(postToUpdateID);
-        System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
-        final Long tsLong = System.currentTimeMillis();
-        postDesc.put("approvalStatus" ,"Approved");
-        postDesc.put("companyName", job.companyName);
-        postDesc.put("jobTitle", job.jobTitle);
-        postDesc.put("jobDescription", job.jobDescripion);
-        postDesc.put("timeStamp", job.timestamp);
-        postDesc.put("companyEmail", job.email);
-        System.out.println(postDesc);
-        System.out.println("999999999999999999999999");
-        System.out.println(job);
-        db.collection("posts").document(postToUpdateID).set(postDesc).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-
-                    jobs.get(position).setApprovalStatus("Approved");
-                    jobs.remove(position);
-                    mAdapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "Approved successfully", Toast.LENGTH_SHORT).show();
-
-                }else {
-
-                    Log.d(TAG, "Approving task failed");
-                    Toast.makeText(getActivity(), "Approving Failed", Toast.LENGTH_SHORT).show();
-
-
-                }
-            }
-        });
     }
 }

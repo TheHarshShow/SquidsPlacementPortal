@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+
+//Student Page 1
+
 public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
     private ArrayList<JobPostingStudent> mDataset;
     private OnNoteListener mOnNoteListener;
@@ -25,9 +28,9 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
 
         public MyViewHolder(View v,OnNoteListener onNoteListener) {
             super(v);
-            companyNameTextView = v.findViewById(R.id.company_name);
+            companyNameTextView = v.findViewById(R.id.company_name_text_view);
             jobTitleTextView = v.findViewById(R.id.job_title_text_view);
-            jobDescriptionTextView = v.findViewById(R.id.job_description);
+            jobDescriptionTextView = v.findViewById(R.id.job_description_text_view);
 
             this.onNoteListener=onNoteListener;
 

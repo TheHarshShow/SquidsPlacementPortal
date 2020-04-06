@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.webkit.DownloadListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,9 +31,9 @@ public class ShowJobActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_job_show);
         Log.d(TAG, "onCreate: created");
-        mcompany_name=findViewById(R.id.company_name);
+        mcompany_name=findViewById(R.id.company_name_text_view);
         mjob_title=findViewById(R.id.job_title_text_view);
-        mjob_description=findViewById(R.id.job_description);
+        mjob_description=findViewById(R.id.job_description_text_view);
 
 
         downloadBrochureButton = findViewById(R.id.download_brochure_button);
@@ -91,7 +90,7 @@ public class ShowJobActivity extends AppCompatActivity {
             companyEmail = job.email;
             timestamp = job.timestamp;
         }
-        Button applyButton = (Button) findViewById(R.id.apply_button);
+        Button applyButton = (Button) findViewById(R.id.approve_button);
 
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override

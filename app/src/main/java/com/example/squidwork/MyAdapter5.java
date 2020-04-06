@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+//Company page 2
+
 public class MyAdapter5 extends RecyclerView.Adapter<MyAdapter5.MyViewHolder>  {
 
     private ArrayList<StudentApplicationCCD2> mDataset;

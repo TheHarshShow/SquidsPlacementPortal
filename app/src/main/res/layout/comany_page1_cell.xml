@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/company_name"
+        android:id="@+id/company_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,10 +28,10 @@
         android:hint="Job Title"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_name" />
+        app:layout_constraintTop_toBottomOf="@+id/company_name_text_view" />
 
     <TextView
-        android:id="@+id/job_description"
+        android:id="@+id/job_description_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
