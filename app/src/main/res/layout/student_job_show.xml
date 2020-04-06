@@ -16,7 +16,7 @@
             android:id="@+id/company_name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:hint="Company Name"
             android:textSize="24sp"
@@ -28,7 +28,7 @@
             android:id="@+id/job_title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="12dp"
             android:text="Job Title"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:hint="Job Description"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:text="APPLY"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,11 +67,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:text="Download Brochure"
             app:layout_constraintBottom_toTopOf="@+id/approve_button"
-            app:layout_constraintTop_toBottomOf="@+id/job_description_text_view"
-            tools:layout_editor_absoluteX="9dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/job_description_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
