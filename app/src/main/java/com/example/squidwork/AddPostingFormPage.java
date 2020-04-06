@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,10 +58,27 @@ public class AddPostingFormPage extends AppCompatActivity {
     private Uri file;
     FirebaseStorage storage;
 
+    private CheckBox csebox;
+    private CheckBox mncbox;
+    private CheckBox eeebox;
+    private CheckBox ecebox;
+    private CheckBox epbox;
+    private CheckBox mebox;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_posting_form_page);
+
+        csebox = findViewById(R.id.cse_box);
+        mncbox = findViewById(R.id.mnc_box);
+        eeebox = findViewById(R.id.eee_box);
+        ecebox = findViewById(R.id.ece_box);
+        epbox = findViewById(R.id.ep_box);
+        mebox = findViewById(R.id.me_box);
+
+        db.collection("posts").where
 
         storage = FirebaseStorage.getInstance();
 
@@ -116,8 +134,43 @@ public class AddPostingFormPage extends AppCompatActivity {
                     postDesc.put("companyEmail", currentUser.getEmail());
                     postDesc.put("brochureURL", "blank");
 
+                    ArrayList<String> checked = new ArrayList<String>();
 
-                    postsRef.document(currentUser.getEmail()+"-"+tsLong).update(postDesc).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    if(csebox.isChecked()){
+
+                        checked.add("CSE");
+
+                    }
+                    if(mncbox.isChecked()){
+
+                        checked.add("MnC");
+
+                    }
+                    if(eeebox.isChecked()){
+
+                        checked.add("EEE");
+
+                    }
+                    if(ecebox.isChecked()){
+
+                        checked.add("ECE");
+
+                    }
+                    if(epbox.isChecked()){
+
+                        checked.add("EP");
+
+                    }
+                    if(mebox.isChecked()){
+
+                        checked.add("ME");
+
+                    }
+
+                    postDesc.put("branches", checked);
+
+
+                    postsRef.document(currentUser.getEmail()+"-"+tsLong).set(postDesc).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 

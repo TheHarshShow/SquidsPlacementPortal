@@ -10,7 +10,7 @@
         android:id="@+id/name_text"
         android:layout_width="0dp"
         android:layout_height="49dp"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Company Name To Display"
         android:inputType="textPersonName"
@@ -22,7 +22,7 @@
         android:id="@+id/job_text"
         android:layout_width="0dp"
         android:layout_height="49dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Job Title"
         android:inputType="textPersonName"
@@ -33,17 +33,16 @@
     <EditText
         android:id="@+id/description_text"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="41dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Job Description"
+        android:hint="Job Description (Optional, Key Remarks only)"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/brochure_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/job_text" />
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <Button
         android:id="@+id/post_button"
@@ -77,5 +76,86 @@
         app:layout_constraintTop_toTopOf="@+id/brochure_button"
         app:layout_constraintVertical_bias="0.413"
         />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Minimum CPI"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/job_text" />
+
+    <CheckBox
+        android:id="@+id/cse_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="CSE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <CheckBox
+        android:id="@+id/mnc_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="MnC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cse_box" />
+
+    <CheckBox
+        android:id="@+id/eee_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="EEE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mnc_box" />
+
+    <CheckBox
+        android:id="@+id/ece_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="ECE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eee_box" />
+
+    <CheckBox
+        android:id="@+id/ep_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="EP"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Pick Branches"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description_text" />
+
+    <CheckBox
+        android:id="@+id/me_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="ME"
+        app:layout_constraintStart_toStartOf="@+id/ep_box"
+        app:layout_constraintTop_toBottomOf="@+id/ep_box" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
