@@ -33,6 +33,7 @@ public class ShowJobToCCD extends AppCompatActivity {
     private TextView companyNameTextView;
     private TextView jobTitleTextView;
     private TextView jobDescriptionTextView;
+    private TextView companyEmailTextView;
     private Button brochureButton;
     private Button acceptButton;
 
@@ -55,7 +56,7 @@ public class ShowJobToCCD extends AppCompatActivity {
 
         companyNameTextView = findViewById(R.id.company_name_text_view);
         jobTitleTextView = findViewById(R.id.job_title_text_view);
-
+        companyEmailTextView = findViewById(R.id.company_email_text_view);
         jobDescriptionTextView = findViewById(R.id.job_description_text_view);
         acceptButton = findViewById(R.id.accept_button);
         rejectButton = findViewById(R.id.delete_button);
@@ -65,6 +66,7 @@ public class ShowJobToCCD extends AppCompatActivity {
         companyNameTextView.setText(job.companyName);
         jobTitleTextView.setText(job.jobTitle);
         jobDescriptionTextView.setText(job.jobDescripion);
+        companyEmailTextView.setText(job.email);
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override

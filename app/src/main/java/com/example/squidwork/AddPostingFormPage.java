@@ -117,7 +117,7 @@ public class AddPostingFormPage extends AppCompatActivity {
                     postDesc.put("brochureURL", "blank");
 
 
-                    postsRef.document(currentUser.getEmail()+"-"+tsLong).set(postDesc).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    postsRef.document(currentUser.getEmail()+"-"+tsLong).update(postDesc).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
@@ -135,13 +135,7 @@ public class AddPostingFormPage extends AppCompatActivity {
                             } else {
 
                                 Toast.makeText(AddPostingFormPage.this, "Could not add post due to some error.", Toast.LENGTH_SHORT).show();
-                                x[0]=1;
 
-                                if(x[0]==1 && y[0]==1){
-
-                                    finish();
-
-                                }
 
 
                             }

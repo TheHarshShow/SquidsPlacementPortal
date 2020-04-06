@@ -34,13 +34,13 @@
         android:id="@+id/bio_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="107dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="41dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Bio"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/approve_button"
+        app:layout_constraintBottom_toTopOf="@+id/cv_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/skills_text" />
@@ -53,4 +53,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/cv_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Upload CV"
+        app:layout_constraintBottom_toTopOf="@+id/approve_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/path_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Choose pdf file..."
+        app:layout_constraintBottom_toBottomOf="@+id/cv_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cv_button"
+        app:layout_constraintTop_toTopOf="@+id/cv_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

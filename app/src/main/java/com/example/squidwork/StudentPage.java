@@ -37,8 +37,8 @@ public class StudentPage extends AppCompatActivity {
     }
     private void addTabs(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new StudentPage1(), "Student Page 1");
-        adapter.addFrag(new StudentPage2(), "Student Page 2");
+        adapter.addFrag(new StudentPage1(), "Job Postings");
+        adapter.addFrag(new StudentPage2(), "Your Applications");
         viewPager.setAdapter(adapter);
     }
 
