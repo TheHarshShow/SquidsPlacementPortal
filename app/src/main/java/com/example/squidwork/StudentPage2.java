@@ -49,10 +49,11 @@ class ApplicationToLoad implements Serializable {
     String jobTitle;
     String approvalStatus;
     String id;
+    String url;
 
     Long timestamp;
 
-    public ApplicationToLoad(String a, String b, String c, String d, String e, String f, String g, String h, String i, Long j){
+    public ApplicationToLoad(String a, String b, String c, String d, String e, String f, String g, String h, String i, Long j, String z){
 
         this.studentName = a;
         this.studentEmail = b;
@@ -64,6 +65,7 @@ class ApplicationToLoad implements Serializable {
         this.approvalStatus = h;
         this.id = i;
         this.timestamp = j;
+        this.url = z;
 
 
     }
@@ -127,11 +129,25 @@ public class StudentPage2 extends Fragment implements MyAdapter6.OnNoteListener{
                             Map docData = new HashMap();
 
                             docData = documentChange.getDocument().getData();
-                            ApplicationToLoad application = new ApplicationToLoad(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
-                                    docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
-                                    docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
-                                    documentChange.getDocument().getId(), (Long) docData.get("timeStamp"));
-                            applications.add(application);
+
+                            if(docData.containsKey("cvURL")){
+
+                                ApplicationToLoad application = new ApplicationToLoad(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
+                                        docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
+                                        docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
+                                        documentChange.getDocument().getId(), (Long) docData.get("timeStamp"), docData.get("cvURL").toString());
+                                applications.add(application);
+
+                            } else {
+
+                                ApplicationToLoad application = new ApplicationToLoad(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
+                                        docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
+                                        docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
+                                        documentChange.getDocument().getId(), (Long) docData.get("timeStamp"), "blank");
+                                applications.add(application);
+
+                            }
+
 
                             applications.sort(new Comparator<ApplicationToLoad>() {
                                 @Override
