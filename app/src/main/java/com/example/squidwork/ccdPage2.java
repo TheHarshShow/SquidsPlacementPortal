@@ -52,10 +52,11 @@ class StudentApplicationCCD implements Serializable {
     String jobTitle;
     String approvalStatus;
     String id;
+    String url;
 
     Long timestamp;
 
-    public StudentApplicationCCD(String a, String b, String c, String d, String e, String f, String g, String h, String i, Long j){
+    public StudentApplicationCCD(String a, String b, String c, String d, String e, String f, String g, String h, String i, Long j, String z){
 
         this.studentName = a;
         this.studentEmail = b;
@@ -67,7 +68,7 @@ class StudentApplicationCCD implements Serializable {
         this.approvalStatus = h;
         this.id = i;
         this.timestamp = j;
-
+        this.url = z;
 
     }
 
@@ -140,11 +141,29 @@ public class ccdPage2 extends Fragment implements MyAdapter4.OnNoteListener{
                                 status="Waiting";
                             }
 
-                            StudentApplicationCCD application =
-                                    new StudentApplicationCCD(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
-                                            docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
-                                            docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
-                                            documentChange.getDocument().getId().toString(), (Long) docData.get("timeStamp"));
+                            StudentApplicationCCD application;
+
+                            if(docData.containsKey("cvURL")){
+
+                                application =
+                                        new StudentApplicationCCD(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
+                                                docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
+                                                docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
+                                                documentChange.getDocument().getId().toString(), (Long) docData.get("timeStamp"), docData.get("cvURL").toString());
+
+
+                            } else {
+
+
+                                application =
+                                        new StudentApplicationCCD(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
+                                                docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
+                                                docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
+                                                documentChange.getDocument().getId().toString(), (Long) docData.get("timeStamp"), "blank");
+
+                            }
+
+
 
                             Log.d(TAG, "Application Created "+application.timestamp);
 

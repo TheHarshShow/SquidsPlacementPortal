@@ -3,9 +3,16 @@ package com.example.squidwork;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +40,9 @@ public class CompanyShowApplicationActivity extends AppCompatActivity {
     private TextView skillsTextView;
     private Button acceptButton;
     private Button rejectButton;
+    private Button cvButton;
 
+    String url;
 
     private FirebaseFirestore db;
 
@@ -47,6 +56,7 @@ public class CompanyShowApplicationActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        cvButton = findViewById(R.id.cv_button);
 
         studentNameTextView = (TextView) findViewById(R.id.student_name_text_view);
         studentEmailTextView = (TextView) findViewById(R.id.student_email_text_view);
@@ -67,6 +77,7 @@ public class CompanyShowApplicationActivity extends AppCompatActivity {
         skillsTextView.setText(sac.skills);
         jobTitleTextView.setText(sac.jobTitle);
 
+        url = sac.url;
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +143,46 @@ public class CompanyShowApplicationActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+            }
+        });
+
+
+        cvButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!url.equals("blank")){
+
+                    Toast.makeText(CompanyShowApplicationActivity.this, "Downloading Brochure...", Toast.LENGTH_SHORT).show();
+
+
+
+                    if (ActivityCompat.checkSelfPermission(CompanyShowApplicationActivity.this, Manifest.permission. WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                        //Ask for permission
+                        ActivityCompat.requestPermissions(CompanyShowApplicationActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 002);
+                    }else{
+
+                        DownloadManager downloadmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                        Uri uri = Uri.parse(url);
+
+                        DownloadManager.Request request = new DownloadManager.Request(uri);
+                        request.setTitle(sac.id+".pdf");
+                        request.setMimeType("application/pdf");
+                        request.setDescription("CV");
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,sac.id+".pdf");
+                        downloadmanager.enqueue(request);
+
+
+                    }
+
+
+                } else {
+
+                    Toast.makeText(CompanyShowApplicationActivity.this, "No CV available", Toast.LENGTH_SHORT).show();
+
+                }
 
             }
         });

@@ -51,10 +51,11 @@ class StudentApplicationCCD2 implements Serializable {
     String jobTitle;
     String approvalStatus;
     String id;
+    String url;
 
     Long timestamp;
 
-    public StudentApplicationCCD2(String a, String b, String c, String d, String e, String f, String g, String h, String i, Long j){
+    public StudentApplicationCCD2(String a, String b, String c, String d, String e, String f, String g, String h, String i, Long j, String z){
 
         this.studentName = a;
         this.studentEmail = b;
@@ -66,6 +67,7 @@ class StudentApplicationCCD2 implements Serializable {
         this.approvalStatus = h;
         this.id = i;
         this.timestamp = j;
+        this.url = z;
 
 
     }
@@ -101,6 +103,7 @@ public class CompanyPage2 extends Fragment implements MyAdapter5.OnNoteListener{
         Button signOutButton =  (Button) v.findViewById(R.id.sign_out_button2);
 
 
+
         applicationsRecyclerView = (RecyclerView) v.findViewById(R.id.applications_recycler_view);
         applicationsRecyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getActivity(), 1);
@@ -134,11 +137,25 @@ public class CompanyPage2 extends Fragment implements MyAdapter5.OnNoteListener{
                             Map docData = new HashMap();
                             docData = documentChange.getDocument().getData();
 
-                            StudentApplicationCCD2 application =
-                                    new StudentApplicationCCD2(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
-                                            docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
-                                            docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
-                                            documentChange.getDocument().getId().toString(), (Long) docData.get("timeStamp"));
+
+                            StudentApplicationCCD2 application;
+
+                            if(docData.containsKey("cvURL")) {
+                                application =
+                                        new StudentApplicationCCD2(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
+                                                docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
+                                                docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
+                                                documentChange.getDocument().getId().toString(), (Long) docData.get("timeStamp"), docData.get("cvURL").toString());
+                            } else {
+
+                                application =
+                                        new StudentApplicationCCD2(docData.get("Name").toString(), docData.get("candidateEmail").toString(),
+                                                docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
+                                                docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
+                                                documentChange.getDocument().getId().toString(), (Long) docData.get("timeStamp"), "blank");
+
+
+                            }
 
                             Log.d(TAG, "Application Created "+application.timestamp);
 

@@ -115,12 +115,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:backgroundTint="#4CAF50"
             android:text="Accept"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bio_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/cv_button"
             app:layout_constraintWidth_percent="0.45" />
 
         <Button
@@ -128,13 +128,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="26dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:backgroundTint="#F44336"
             android:text="Reject"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/accept_button"
-            app:layout_constraintTop_toBottomOf="@+id/bio_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/cv_button"
             app:layout_constraintWidth_percent="0.45" />
+
+        <Button
+            android:id="@+id/cv_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Download CV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bio_text_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
