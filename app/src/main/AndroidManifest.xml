@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowJobToCCD"></activity>
+        <activity android:name=".ShowJobToCompany"></activity>
+        <activity android:name=".ShowJobToCCD" />
         <activity android:name=".StudentShowApplicationActivity" />
         <activity android:name=".CompanyShowApplicationActivity" />
         <activity android:name=".ShowApplicationActivity" />
@@ -32,10 +33,10 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

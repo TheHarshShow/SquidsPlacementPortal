@@ -57,7 +57,7 @@ public class ShowApplicationActivity extends AppCompatActivity {
         skillsTextView = (TextView) findViewById(R.id.skills_text_view);
 
         acceptButton = (Button) findViewById(R.id.accept_button);
-        rejectButton = (Button) findViewById(R.id.reject_button);
+        rejectButton = (Button) findViewById(R.id.delete_button);
 
         studentNameTextView.setText(sac.studentName);
         studentEmailTextView.setText(sac.studentEmail);

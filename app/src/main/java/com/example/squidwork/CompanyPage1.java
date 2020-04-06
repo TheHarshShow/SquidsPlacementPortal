@@ -35,13 +35,14 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-class JobPosting {
+class JobPosting implements Serializable {
 
     String companyName;
     String jobTitle;
@@ -49,14 +50,16 @@ class JobPosting {
     String email;
     String approvalStatus;
     Long timestamp;
+    String url;
 
-    public JobPosting(String a, String b, String c, Long d, String e,String app){
+    public JobPosting(String a, String b, String c, Long d, String e,String app, String f){
         this.approvalStatus = app;
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
         this.timestamp = d;
         this.email = e;
+        this.url = f;
     }
 
 
@@ -65,7 +68,7 @@ class JobPosting {
     }
 }
 
-public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListener {
+public class CompanyPage1 extends Fragment implements MyAdapter.OnNoteListener {
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -124,7 +127,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
                             if(status==null){
                                 status="Waiting";
                             }
-                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), currentUser.getEmail(), status);
+                            JobPosting job = new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), currentUser.getEmail(), status, docData.get("brochureURL").toString());
 
                             jobs.add(job);
                             jobs.sort(new Comparator<JobPosting>() {
@@ -146,7 +149,7 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
                             for(JobPosting j : jobs){
                                 if(j.timestamp.toString().equals(docData.get("timeStamp").toString())){
                                     System.out.println("9999999999999999999999999999999999999999999999999999777");
-                                    jobs.set(i,new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"),docData.get("companyEmail").toString(), docData.get("approvalStatus").toString()));
+                                    jobs.set(i,new JobPosting(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"),docData.get("companyEmail").toString(), docData.get("approvalStatus").toString(), docData.get("brochureURL").toString()));
                                     System.out.println(jobs.get(i));
                                     JobPosting p =jobs.get(i);
                                     System.out.println(p.approvalStatus);
@@ -217,29 +220,17 @@ public class CompanyPage1 extends Fragment implements MyAdapter.OnItemClickListe
         FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
+
+
     @Override
-    public void onDeleteClick(final int position) {
-        System.out.println("Delete clicked: "+ position);
+    public void onNoteClick(int position) {
+
         JobPosting job = jobs.get(position);
-        String postToDeleteID = job.email+"-"+job.timestamp.toString();
-        db.collection("posts").document(postToDeleteID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
 
-//                    jobs.remove(position);
-                    Toast.makeText(getActivity(), "Delete post successfully", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), ShowJobToCompany.class);
+        intent.putExtra("job to show", job);
 
-                }else {
-
-                    Log.d(TAG, "Delete task failed");
-                    Toast.makeText(getActivity(), "Delete Failed", Toast.LENGTH_SHORT).show();
-
-
-                }
-            }
-        });
-
+        startActivity(intent);
 
     }
 }

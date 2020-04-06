@@ -18,45 +18,38 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<JobPosting> mDataset;
-    private OnItemClickListener mListener;
+    private OnNoteListener mListener;
 
-    public interface OnItemClickListener {
 
-        void onDeleteClick(int position);
-    }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         public TextView companyNameTextView;
         public TextView jobTitleTextView;
         public TextView jobDescriptionTextView;
         public TextView approvalStatusTextView;
-        public Button deleteButton;
+        MyAdapter.OnNoteListener onNoteListener;
 
 
-        public MyViewHolder(View v, final OnItemClickListener listener) {
+
+        public MyViewHolder(View v, final OnNoteListener listener) {
             super(v);
             companyNameTextView = v.findViewById(R.id.company_name_text_view);
             jobTitleTextView = v.findViewById(R.id.job_title_text_view);
             jobDescriptionTextView = v.findViewById(R.id.job_description_text_view);
             approvalStatusTextView = v.findViewById(R.id.approval_status);
-            deleteButton = v.findViewById(R.id.delete_button);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position);
-                        }
-                    }
-                }
-            });
+            onNoteListener = listener;
+            itemView.setOnClickListener(this);
+
         }
 
+        @Override
+        public void onClick(View v) {
+            onNoteListener.onNoteClick(getAdapterPosition());
+        }
     }
 
 
@@ -64,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Provide a suitable constructor (depends on the kind of dataset)
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public MyAdapter(ArrayList<JobPosting> jobs, OnItemClickListener setOnItemClickListener) {
+    public MyAdapter(ArrayList<JobPosting> jobs, OnNoteListener setOnItemClickListener) {
 
         this.mListener = setOnItemClickListener;
         this.mDataset = jobs;
@@ -106,4 +99,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         return mDataset.size();
     }
+
+    public interface OnNoteListener{
+        void onNoteClick(int position);
+    }
+
 }
