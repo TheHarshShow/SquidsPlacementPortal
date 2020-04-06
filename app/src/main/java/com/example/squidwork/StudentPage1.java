@@ -35,6 +35,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -44,66 +45,27 @@ import java.util.Map;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class JobPostingStudent implements Parcelable{
+class JobPostingStudent implements Serializable {
 
     String companyName;
     String jobTitle;
     String jobDescripion;
     Long timestamp;
     String email;
+    String url;
 
-    public JobPostingStudent(String a, String b, String c, Long d, String e){
+    public JobPostingStudent(String a, String b, String c, Long d, String e, String f){
 
         this.companyName = a;
         this.jobTitle = b;
         this.jobDescripion = c;
         this.timestamp = d;
         this.email = e;
+        this.url = f;
     }
 
 
-    protected JobPostingStudent(Parcel in) {
-        companyName = in.readString();
-        jobTitle = in.readString();
-        jobDescripion = in.readString();
-        if (in.readByte() == 0) {
-            timestamp = null;
-        } else {
-            timestamp = in.readLong();
-        }
-        email = in.readString();
-    }
 
-    public static final Creator<JobPostingStudent> CREATOR = new Creator<JobPostingStudent>() {
-        @Override
-        public JobPostingStudent createFromParcel(Parcel in) {
-            return new JobPostingStudent(in);
-        }
-
-        @Override
-        public JobPostingStudent[] newArray(int size) {
-            return new JobPostingStudent[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(companyName);
-        dest.writeString(jobTitle);
-        dest.writeString(jobDescripion);
-        if (timestamp == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeLong(timestamp);
-        }
-        dest.writeString(email);
-    }
 }
 
 public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener{
@@ -157,7 +119,8 @@ public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener{
                             Map docData = new HashMap();
                             docData = documentChange.getDocument().getData();
                             System.out.println("ADDDD "+docData);
-                            JobPostingStudent job = new JobPostingStudent(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(), (Long) docData.get("timeStamp"), docData.get("companyEmail").toString());
+                            JobPostingStudent job = new JobPostingStudent(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(),
+                                    (Long) docData.get("timeStamp"), docData.get("companyEmail").toString(), docData.get("brochureURL").toString());
                             jobs.add(job);
                             jobs.sort(new Comparator<JobPostingStudent>() {
                                 @Override
