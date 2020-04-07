@@ -78,7 +78,7 @@ public class AddPostingFormPage extends AppCompatActivity {
         epbox = findViewById(R.id.ep_box);
         mebox = findViewById(R.id.me_box);
 
-        db.collection("posts").where
+//        db.collection("posts").where
 
         storage = FirebaseStorage.getInstance();
 

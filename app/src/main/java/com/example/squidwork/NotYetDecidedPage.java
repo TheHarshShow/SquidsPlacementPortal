@@ -117,6 +117,8 @@ public class NotYetDecidedPage extends AppCompatActivity implements View.OnClick
                                         Map<String, Object> userDoc = new HashMap<>();
                                         userDoc.put("type", "student");
                                         userDoc.put("email", currentUser.getEmail());
+                                        userDoc.put("profile", "NotUpdated");
+                                        userDoc.put("ImageUrl","None");
                                         Log.d(TAG, "User does not exist! " + userDoc);
                                         db.collection("users").document(currentUser.getEmail()).set(userDoc);
 

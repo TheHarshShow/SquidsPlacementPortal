@@ -103,8 +103,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d(TAG, "User exists! " + docData.get("type") + " " + docData.get("email"));
 
                             if (docData.get("type").equals("student")) {
-
-                                startActivity(new Intent(MainActivity.this, StudentPage.class));
+                                if(docData.get("profile").equals("Updated")) {
+                                    startActivity(new Intent(MainActivity.this, StudentPage.class));
+                                    System.out.println(docData.get("profile"));
+                                    System.out.println("UPDATED WALAAAA");
+                                }else{
+                                    startActivity(new Intent(MainActivity.this, EditProfilePage.class));
+                                    System.out.println(docData.get("profile"));
+                                    System.out.println("NOTTTTTT");
+                                }
 
                             } else if (docData.get("type").equals("notYetDecided")) {
 
@@ -130,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Map<String, Object> userDoc = new HashMap<>();
                             userDoc.put("type", "notYetDecided");
                             userDoc.put("email", currentUser.getEmail());
-
+                            userDoc.put("profile","NotUpdated");
+                            userDoc.put("ImageUrl","None");
                             Log.d(TAG, "User does not exist! " + userDoc);
 
                             db.collection("users").document(currentUser.getEmail()).set(userDoc);
@@ -183,9 +191,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -253,7 +261,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                             if(docData.get("type").equals("student")){
 
-                                                startActivity(new Intent(MainActivity.this, StudentPage.class));
+                                                if(docData.get("profile").equals("Updated")) {
+                                                    startActivity(new Intent(MainActivity.this, StudentPage.class));
+                                                    System.out.println(docData.get("profile"));
+                                                    System.out.println("UPDATED WALAAAA");
+                                                }else{
+                                                    startActivity(new Intent(MainActivity.this, EditProfilePage.class));
+                                                    System.out.println(docData.get("profile"));
+                                                    System.out.println("NOTTTTTT");
+                                                }
 
                                             } else if(docData.get("type").equals("notYetDecided")){
 
@@ -277,6 +293,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                             Map<String, Object> userDoc = new HashMap<>();
                                             userDoc.put("type","notYetDecided");
+                                            userDoc.put("profile","NotUpdated");
+                                            userDoc.put("ImageUrl","None");
                                             userDoc.put("email",user.getEmail());
                                             Log.d(TAG, "User does not exist! "+userDoc);
                                             db.collection("users").document(user.getEmail()).set(userDoc);
