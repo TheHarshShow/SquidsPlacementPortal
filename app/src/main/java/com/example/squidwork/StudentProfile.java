@@ -65,7 +65,6 @@ public class StudentProfile extends AppCompatActivity {
 
 
         DocumentReference userRef = db.collection("users").document(mAuth.getCurrentUser().getEmail().toString());
-        //Map <String,Object> docdata = new HashMap<>();
 
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -94,8 +93,7 @@ public class StudentProfile extends AppCompatActivity {
                         phone.setText(ph);
                         name.setText(nm);
 
-                        //db.collection("users").document(currentUser.getEmail()).set(docData);
-                        //finish();
+                        
 
                     }
 

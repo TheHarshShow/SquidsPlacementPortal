@@ -299,12 +299,12 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                 Uri resultUri = result.getUri();
                 //profile_button.setImageURI(resultUri);
                 Picasso.with(EditProfilePage.this).load(resultUri).fit().into(profile_button);
-                Toast.makeText(EditProfilePage.this,"Uploaded Im75424763sfully",Toast.LENGTH_SHORT).show();
                 System.out.println("NAA>>>>>>>>>>>>>>>>>");
+
                 mStorage.child(mAuth.getCurrentUser().getEmail()).putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(EditProfilePage.this,"Uploaded Image Successfully",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
                         System.out.println("NAHI HUA>>>>>>>><<<<<<<<<<<<<<<>>>>>>>>>");
                         StorageReference downloaduriref = mStorage.child(mAuth.getCurrentUser().getEmail());
                         Task<Uri> downloaduritask = downloaduriref.getDownloadUrl();
@@ -320,8 +320,6 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
-
-
             //mProgress.setMessage("Uploading...");
             //mProgress.show();
 
@@ -338,37 +336,12 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
+                //Later Work
     }
+
+
 }
 
-
-
-
-
-
-/*
-
-
-class SpinnerActivity extends EditProfilePage implements AdapterView.OnItemSelectedListener {
-
-    Spinner branch = (Spinner) findViewById(R.id.BRANCH_ET);
-
-
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
-}
- mProgress.dismiss();
-
-*/
 
 
 
