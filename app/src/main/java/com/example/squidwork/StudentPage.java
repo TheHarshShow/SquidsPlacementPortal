@@ -95,14 +95,14 @@ public class StudentPage extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-
+        System.out.println("COMPny>>>>>>>>STUDD>.");
         getMenuInflater().inflate(R.menu.menu_main,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
+        System.out.println("COMPny>>>>>>>>STIUDD>.");
         if(item.getItemId()==R.id.sign_out_button2){
 
             mAuth.signOut();

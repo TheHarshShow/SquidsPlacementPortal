@@ -37,20 +37,18 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.Map;
 
-public class EditProfilePage extends AppCompatActivity  implements AdapterView.OnItemSelectedListener {
+public class CompanyEditProfilePage extends AppCompatActivity   {
 
     private FirebaseFirestore db;
     private StorageReference mStorage;
     private FirebaseAuth mAuth;
     private ImageButton profile_button;
-    private TextView name;
-    private EditText roll;
-    private EditText cpi;
+    private EditText name;
+
     private EditText phone;
-    private String BranchSelected;
+
     private Button saveButton;
-    private final String TAG = "TAG";
-    private Spinner branch;
+
     private Uri resultUri = null;
     private static final int GALLERY_REQUEST = 182;
     private ProgressDialog mProgress;
@@ -58,27 +56,16 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile_page);
+        setContentView(R.layout.company_edit_profile_page);
         System.out.println("EditPage............");
-        name = (TextView)findViewById(R.id.name_text);
+        name = (EditText)findViewById(R.id.CNAME_ET);
 
-        roll = (EditText)findViewById(R.id.ROLLNUMBER_ET);
-        cpi = (EditText)findViewById(R.id.CPI_ET);
-        phone = (EditText)findViewById(R.id.PHONE_ET);
+        phone = (EditText)findViewById(R.id.CPHONE_ET);
         saveButton = (Button)findViewById(R.id.csave_profile_button);
-        profile_button = (ImageButton)findViewById(R.id.update_image_button);
+        profile_button = (ImageButton)findViewById(R.id.cupdate_image_button);
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference().child("profile_images");
-
-        name.setText(mAuth.getCurrentUser().getDisplayName().toString());
-        branch = (Spinner)findViewById(R.id.BRANCH_ET);
-        branch.setOnItemSelectedListener(this);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, branches);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        branch.setAdapter(adapter);
-
 
         profile_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,24 +107,20 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                 public void onClick(View view) {
                                     //String br = branch.getText().toString();
 
-                                    String rn = roll.getText().toString();
-                                    String ph = phone.getText().toString();
-                                    String cp = cpi.getText().toString();
-                                    String nm = mAuth.getCurrentUser().getDisplayName();
 
-                                    System.out.println(rn);
-                                    System.out.println(rn);
-                                    System.out.println(rn);
-                                    System.out.println(cp);
-                                    System.out.println(BranchSelected);
+                                    String ph = phone.getText().toString();
+
+                                    String nm = name.getText().toString();
+
+
                                     System.out.println("BRACCHFWFWRVWV4444444444444444");
-                                    if(BranchSelected!="Select..." &&!TextUtils.isEmpty(rn)  && !TextUtils.isEmpty(ph)  && !TextUtils.isEmpty(cp) && !TextUtils.isEmpty(nm) ){
+                                    if(!TextUtils.isEmpty(ph)   && !TextUtils.isEmpty(nm) ){
                                         //docdata.put("Branch",br);
-                                        docdata.put("Roll Number",rn);
+
                                         docdata.put("Phone",ph);
-                                        docdata.put("CPI",cp);
+
                                         docdata.put("Name",nm);
-                                        docdata.put("Branch", BranchSelected);
+
                                         System.out.println(docdata);
                                         userRef.set(docdata).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @RequiresApi( api = Build.VERSION_CODES.N)
@@ -151,18 +134,18 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if(task.isSuccessful()){
-                                                                Toast.makeText(EditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
-                                                                Intent intent = new Intent(EditProfilePage.this,MainActivity.class);
+                                                                Toast.makeText(CompanyEditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
+                                                                Intent intent = new Intent(CompanyEditProfilePage.this,MainActivity.class);
                                                                 startActivity(intent);
                                                             }
                                                         }
                                                     });
-                                                    //Toast.makeText(EditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
+                                                    //Toast.makeText(CompanyEditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
                                                     //finish();
 
                                                 }else{
                                                     System.out.println("RRRRRR8888888888888888888RRRRRRRRRRRRRRR");
-                                                    Toast.makeText(EditProfilePage.this,"Profile Updated Successfully But Try Once Again",Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(CompanyEditProfilePage.this,"Profile Updated Successfully But Try Once Again",Toast.LENGTH_LONG).show();
                                                     //finish();
                                                 }
                                             }
@@ -170,63 +153,55 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                         });
 
                                     }else{
-                                    //fields empty
-                                        Toast.makeText(EditProfilePage.this,"FILL ALL THE FIELDS",Toast.LENGTH_LONG).show();
+                                        //fields empty
+                                        Toast.makeText(CompanyEditProfilePage.this,"FILL ALL THE FIELDS",Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
 
                         }else {
 
-                            String br = docdata.get("Branch").toString();
+
                             String em = docdata.get("email").toString();
-                            String rn = docdata.get("Roll Number").toString();
+
                             String ph = docdata.get("Phone").toString();
-                            String cp = docdata.get("CPI").toString();
+
                             String nm = docdata.get("Name").toString();
                             String img = docdata.get("ImageUrl").toString();
                             if(!img.equals("None")){
-                                Picasso.with(EditProfilePage.this).load(img).fit().into(profile_button);
+                                Picasso.with(CompanyEditProfilePage.this).load(img).fit().into(profile_button);
                             }
                             //branch.setText(br);
-                            cpi.setText(cp);
-                            roll.setText(rn);
-                            phone.setText(ph);
-                            name.setText(mAuth.getCurrentUser().getDisplayName().toString());
-                            int spinnerPosition = adapter.getPosition(br);
 
-//set the default according to value
-                            branch.setSelection(spinnerPosition);
-                            System.out.println("BRACCHFWFWRVWV");
-                            System.out.println(BranchSelected);
+                            phone.setText(ph);
+                            name.setText(nm);
+
                             saveButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                   // String br = branch.getText().toString();
+                                    // String br = branch.getText().toString();
 
-                                    String rn = roll.getText().toString();
+
                                     String ph = phone.getText().toString();
-                                    String cp = cpi.getText().toString();
+
                                     String nm = name.getText().toString();
-                                    if( rn!=null && ph!=null && cp!=null && nm!=null && BranchSelected!="Select..."){
+                                    if(  ph!=null&& nm!=null){
 
                                         //docdata.put("Branch",br);
-                                        docdata.put("Roll Number",rn);
+
                                         docdata.put("Phone",ph);
-                                        docdata.put("CPI",cp);
+
                                         docdata.put("Name",nm);
-                                        docdata.put("Branch", BranchSelected);
-                                        System.out.println("BRACCHFWFWRVWV111111111111111111111111");
-                                        System.out.println(BranchSelected);
-                                        System.out.println("YHA..............");
+
+
                                         userRef.set(docdata).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @RequiresApi( api = Build.VERSION_CODES.N)
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(task.isSuccessful()){
                                                     System.out.println("YHA..............44");
-                                                    Toast.makeText(EditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
-                                                    Intent intent = new Intent(EditProfilePage.this,StudentProfile.class);
+                                                    Toast.makeText(CompanyEditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(CompanyEditProfilePage.this,CompanyProfile.class);
                                                     startActivity(intent);
                                                 }else{
                                                     System.out.println("YHA.............777");
@@ -239,7 +214,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
 
                                     }else{
                                         //fields empty
-                                        Toast.makeText(EditProfilePage.this,"FILL ALL THE FIELDS",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(CompanyEditProfilePage.this,"FILL ALL THE FIELDS",Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
@@ -289,13 +264,13 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 //profile_button.setImageURI(resultUri);
-                Picasso.with(EditProfilePage.this).load(resultUri).fit().into(profile_button);
+                Picasso.with(CompanyEditProfilePage.this).load(resultUri).fit().into(profile_button);
                 System.out.println("NAA>>>>>>>>>>>>>>>>>");
 
                 mStorage.child(mAuth.getCurrentUser().getEmail()).putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(EditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CompanyEditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
                         System.out.println("NAHI HUA>>>>>>>><<<<<<<<<<<<<<<>>>>>>>>>");
                         StorageReference downloaduriref = mStorage.child(mAuth.getCurrentUser().getEmail());
                         Task<Uri> downloaduritask = downloaduriref.getDownloadUrl();
@@ -317,19 +292,6 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
 
         }
     }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(), "Selected User: "+ branches[position] ,Toast.LENGTH_SHORT).show();
-        BranchSelected = branches[position];
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-                //Later Work
-    }
-
 
 }
 

@@ -121,9 +121,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             } else if (docData.get("type").equals("company")){
 
-                                Log.d(TAG, "company");
-
-                                startActivity(new Intent(MainActivity.this, CompanyPage.class));
+                                if(docData.get("profile").equals("Updated")) {
+                                    startActivity(new Intent(MainActivity.this, CompanyPage.class));
+                                    System.out.println(docData.get("profile"));
+                                    System.out.println("UPDATED WALAAAA");
+                                }else{
+                                    startActivity(new Intent(MainActivity.this, CompanyEditProfilePage.class));
+                                    System.out.println(docData.get("profile"));
+                                    System.out.println("NOTTTTTT");
+                                }
                             } else if (docData.get("type").equals("CCD")){
                                 Log.d(TAG, "ccd");
 
@@ -280,8 +286,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             } else if (docData.get("type").equals("company")){
 
                                                 Log.d(TAG, "company");
+                                                if(docData.get("profile").equals("Updated")) {
+                                                    startActivity(new Intent(MainActivity.this, CompanyPage.class));
+                                                    System.out.println(docData.get("profile"));
+                                                    System.out.println("UPDATED WALAAAA");
+                                                }else{
+                                                    startActivity(new Intent(MainActivity.this, CompanyEditProfilePage.class));
+                                                    System.out.println(docData.get("profile"));
+                                                    System.out.println("NOTTTTTT");
+                                                }
 
-                                                startActivity(new Intent(MainActivity.this, CompanyPage.class));
+
                                             } else if(docData.get("type").equals("CCD")){
                                                 Log.d(TAG, "ccd");
 
