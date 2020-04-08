@@ -109,6 +109,7 @@ public class AddPostingFormPage extends AppCompatActivity {
                 EditText nameTextView = (EditText) findViewById(R.id.name_text);
                 EditText jobTextView = (EditText) findViewById(R.id.job_text);
                 EditText descriptionTextView = (EditText) findViewById(R.id.description_text);
+                EditText minCpiTextView = (EditText) findViewById(R.id.minCpiText);
 
                 if (nameTextView.getText().toString().equals("")){
 
@@ -133,7 +134,7 @@ public class AddPostingFormPage extends AppCompatActivity {
                     postDesc.put("timeStamp", tsLong);
                     postDesc.put("companyEmail", currentUser.getEmail());
                     postDesc.put("brochureURL", "blank");
-
+                    postDesc.put("minCPI",minCpiTextView.getText().toString());
                     ArrayList<String> checked = new ArrayList<String>();
 
                     if(csebox.isChecked()){
