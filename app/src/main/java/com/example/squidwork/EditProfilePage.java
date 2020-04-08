@@ -66,7 +66,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
         cpi = (EditText)findViewById(R.id.CPI_ET);
         phone = (EditText)findViewById(R.id.PHONE_ET);
         saveButton = (Button)findViewById(R.id.csave_profile_button);
-        profile_button = (ImageButton)findViewById(R.id.update_image_button);
+        profile_button = (ImageButton)findViewById(R.id.cupdate_image_button);
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference().child("profile_images");
