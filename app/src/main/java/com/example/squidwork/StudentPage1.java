@@ -28,6 +28,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -68,13 +70,14 @@ class JobPostingStudent implements Serializable {
 
 }
 
-public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener{
+public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener {
 
     private RecyclerView applicationsRecyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter mAdapter;
     private ArrayList<JobPostingStudent> jobs = new ArrayList<JobPostingStudent>();
-
+    private Float student_cpi;
+    private String student_branch;
     private String TAG = "CompanyPage1";
 
     public StudentPage1() {
@@ -88,7 +91,7 @@ public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener{
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_studentpage1, container, false);
 
-
+        System.out.println("3333333333333333333333VVVVVVVVVVVVVVVVVVVVVVVVVVV");
         applicationsRecyclerView = (RecyclerView) v.findViewById(R.id.applications_recycler_view);
         applicationsRecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -99,48 +102,138 @@ public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener{
         mAdapter = new MyAdapter2(jobs,this);
         applicationsRecyclerView.setAdapter(mAdapter);
 
-        db.collection("posts").whereEqualTo("approvalStatus","Approved").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        System.out.println("6666666666666666666664444444443333333333333333333333");
+        DocumentReference userDoc = db.collection("users").document(mAuth.getCurrentUser().getEmail().toString());
+        userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if(e!=null){
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                System.out.println("77777777777777777777777qqpppppppppppppppppppqqqqqqqqqqqqqqqqqqppppppppppppppp");
+                DocumentSnapshot doc = task.getResult();
+                if(task.isSuccessful()){
+                    System.out.println("99999999999999999pppppppppppppppqqqqqqqqqqqqqqqqqqppppppppppppppp");
+                    Map docData = new HashMap();
+                    docData = doc.getData();
+                    student_branch = docData.get("Branch").toString();
+                    student_cpi = Float.parseFloat(docData.get("CPI").toString()) ;
+                    System.out.println(student_branch);
+                    System.out.println(student_cpi);
+                    if(student_branch!=null && student_cpi != null) {
 
-                    Log.d(TAG, "listen:error", e);
-                    return;
 
-                }
-                System.out.println("TADADAAA");
+                        db.collection("posts")
+                                .whereEqualTo("approvalStatus", "Approved")
+                                .whereArrayContains("branches",student_branch)
+                                .whereLessThanOrEqualTo("minCPI",student_cpi)
+                                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @RequiresApi(api = Build.VERSION_CODES.N)
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                        if (e != null) {
+
+                                            Log.d(TAG, "listen:error", e);
+                                            return;
+
+                                        }
+                                        System.out.println("TADADAAA");
 
 
-                for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
-                    switch (documentChange.getType()) {
-                        case ADDED:
+                                        for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
+                                            switch (documentChange.getType()) {
+                                                case ADDED:
+                                                    System.out.println("ADDDEDEDEDEDEDEDED");
+                                                    Map docData = new HashMap();
+                                                    docData = documentChange.getDocument().getData();
+                                                    System.out.println("ADDDD " + docData);
+                                                    JobPostingStudent job = new JobPostingStudent(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(),
+                                                            (Long) docData.get("timeStamp"), docData.get("companyEmail").toString(), docData.get("brochureURL").toString());
+                                                    jobs.add(job);
+                                                    jobs.sort(new Comparator<JobPostingStudent>() {
+                                                        @Override
+                                                        public int compare(JobPostingStudent o1, JobPostingStudent o2) {
+                                                            return o2.timestamp.compareTo(o1.timestamp);
+                                                        }
+                                                    });
 
-                            Map docData = new HashMap();
-                            docData = documentChange.getDocument().getData();
-                            System.out.println("ADDDD "+docData);
-                            JobPostingStudent job = new JobPostingStudent(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(),
-                                    (Long) docData.get("timeStamp"), docData.get("companyEmail").toString(), docData.get("brochureURL").toString());
-                            jobs.add(job);
-                            jobs.sort(new Comparator<JobPostingStudent>() {
-                                @Override
-                                public int compare(JobPostingStudent o1, JobPostingStudent o2) {
-                                    return o2.timestamp.compareTo(o1.timestamp);
-                                }
-                            });
+                                                    mAdapter.notifyDataSetChanged();
 
-                            mAdapter.notifyDataSetChanged();
+                                                    break;
+                                                case MODIFIED:
+                                                    System.out.println("MODIFIEDDEDEDED");
+                                                    Map docData1 = new HashMap();
+                                                    docData1 = documentChange.getDocument().getData();
 
-                            break;
-                        case MODIFIED:
+                                                    String ID=documentChange.getDocument().getId();
 
-                            break;
-                        case REMOVED:
+                                                    for(JobPostingStudent job1:jobs){
 
-                            break;
+
+                                                        if(ID.equals(job1.email+"-"+job1.timestamp.toString())){
+
+                                                            job1.companyName = docData1.get("companyName").toString();
+                                                            job1.jobTitle = docData1.get("jobTitle").toString();
+                                                            job1.jobDescripion = docData1.get("jobDescription").toString();
+                                                            job1.timestamp = (Long) docData1.get("timeStamp");
+                                                            job1.email = docData1.get("companyEmail").toString();
+                                                            //job.approvalStatus = docData.get("approvalStatus").toString();
+                                                            job1.url = docData1.get("brochureURL").toString();
+                                                            break;
+
+                                                        }
+
+
+
+
+                                                    }
+                                                    jobs.sort(new Comparator<JobPostingStudent>() {
+                                                        @Override
+                                                        public int compare(JobPostingStudent o1, JobPostingStudent o2) {
+                                                            return o2.timestamp.compareTo(o1.timestamp);
+                                                        }
+                                                    });
+
+                                                    mAdapter.notifyDataSetChanged();
+                                                    break;
+                                                case REMOVED:
+                                                    System.out.println("REMOVEDDEDED");
+                                                    Map docData2 = new HashMap();
+                                                    docData1 = documentChange.getDocument().getData();
+                                                    String ID1=documentChange.getDocument().getId();
+
+                                                    for(JobPostingStudent jobq:jobs){
+
+
+                                                        if(ID1.equals(jobq.email+"-"+jobq.timestamp.toString())){
+
+                                                            jobs.remove(jobq);
+                                                            break;
+
+                                                        }
+
+
+
+
+                                                    }
+                                                    jobs.sort(new Comparator<JobPostingStudent>() {
+                                                        @Override
+                                                        public int compare(JobPostingStudent o1, JobPostingStudent o2) {
+                                                            return o2.timestamp.compareTo(o1.timestamp);
+                                                        }
+                                                    });
+                                                    mAdapter.notifyDataSetChanged();
+                                                    break;
+                                            }
+                                        }
+
+                                    }
+                                });
+                    }
+                    else{
+                        Intent intent = new Intent(getActivity(),EditProfilePage.class);
+                        startActivity(intent);
                     }
                 }
-
             }
         });
 
@@ -155,7 +248,7 @@ public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        System.out.println("3333333333333333333333MMMMMMMMMMMMMMMMMMMMM");
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -166,6 +259,32 @@ public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener{
 
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        /*
+        System.out.println("6666666666666666666664444444443333333333333333333333");
+        final DocumentReference userDoc = db.collection("users").document(mAuth.getCurrentUser().getEmail().toString());
+        userDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                System.out.println("77777777777777777777777qqpppppppppppppppppppqqqqqqqqqqqqqqqqqqppppppppppppppp");
+                DocumentSnapshot doc = task.getResult();
+                if (task.isSuccessful()){
+                    System.out.println("99999999999999999pppppppppppppppqqqqqqqqqqqqqqqqqqppppppppppppppp");
+                    Map docData = new HashMap();
+                    docData = doc.getData();
+                    student_branch = docData.get("Branch").toString();
+                    student_cpi = Float.parseFloat(docData.get("CPI").toString()) ;
+                    System.out.println(student_branch);
+                    System.out.println(student_cpi);
+                }
+            }
+        });
+        //while (student_cpi==null);
+        System.out.println("333333333333333333333311111111111111111");
+        System.out.println("student_branch");
+        System.out.println(student_cpi);
+        System.out.println(student_branch);
+        System.out.println("student_cpi");*/
     }
 
 

@@ -93,7 +93,7 @@ public class StudentProfile extends AppCompatActivity {
                         phone.setText(ph);
                         name.setText(nm);
 
-                        
+
 
                     }
 
