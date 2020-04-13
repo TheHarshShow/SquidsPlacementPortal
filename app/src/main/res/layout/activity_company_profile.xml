@@ -18,11 +18,11 @@
         android:id="@+id/profile_heading"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
         android:fontFamily="cursive"
-        android:text="Your Profile . . ."
+        android:text="Your Profile"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,14 +70,14 @@
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="35dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginStart="21dp"
         android:text="WOW@GMAIL.COM"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/email_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/email_text"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+        app:layout_constraintTop_toTopOf="@+id/email_text" />
 
     <TextView
         android:id="@+id/phone_text"
@@ -95,11 +95,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
         android:text="NUMBER"
+        app:layout_constraintBottom_toBottomOf="@+id/phone_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/email"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toTopOf="@+id/phone_text" />
 
     <Button
         android:id="@+id/edit_profile_button"

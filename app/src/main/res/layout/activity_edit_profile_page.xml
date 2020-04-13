@@ -17,11 +17,11 @@
         android:id="@+id/editpageheader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
         android:fontFamily="cursive"
-        android:text="Enter The Details To Be Updated . . ."
+        android:text="Enter The Details To Be Updated"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,6 @@
         android:id="@+id/b"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
         android:layout_marginStart="20dp"
         android:fontFamily="sans-serif-black"
         android:text="BRANCH"
@@ -97,12 +96,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-black"
         android:text="ROLL NUMBER"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ROLLNUMBER_ET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_text" />
+        app:layout_constraintTop_toTopOf="@+id/ROLLNUMBER_ET" />
 
     <Spinner
         android:id="@+id/BRANCH_ET"

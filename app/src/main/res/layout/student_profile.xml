@@ -18,11 +18,11 @@
         android:id="@+id/profile_heading"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
         android:fontFamily="cursive"
-        android:text="Your Profile . . ."
+        android:text="Your Profile"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,11 +96,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
         android:text="Branch"
+        app:layout_constraintBottom_toBottomOf="@+id/branchtext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/roll_number"
-        app:layout_constraintTop_toBottomOf="@+id/roll_number" />
+        app:layout_constraintTop_toTopOf="@+id/branchtext" />
 
     <TextView
         android:id="@+id/cpi_text"
@@ -109,7 +109,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-black"
-        android:text="@string/common_google_play_services_install_button"
+        android:text="CPI"
         app:layout_constraintEnd_toEndOf="@+id/branchtext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/branchtext" />
@@ -119,11 +119,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
         android:text="CPI"
+        app:layout_constraintBottom_toBottomOf="@+id/cpi_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/branch"
-        app:layout_constraintTop_toBottomOf="@+id/branch" />
+        app:layout_constraintTop_toTopOf="@+id/cpi_text" />
 
     <TextView
         android:id="@+id/email_text"
@@ -142,12 +142,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="22dp"
         android:text="WOW@GMAIL.COM"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/email_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/cpi"
-        app:layout_constraintTop_toBottomOf="@+id/cpi" />
+        app:layout_constraintTop_toTopOf="@+id/email_text" />
 
     <TextView
         android:id="@+id/phone_text"
@@ -166,11 +166,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
         android:text="NUMBER"
+        app:layout_constraintBottom_toBottomOf="@+id/phone_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/email"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toTopOf="@+id/phone_text" />
 
     <Button
         android:id="@+id/edit_profile_button"
