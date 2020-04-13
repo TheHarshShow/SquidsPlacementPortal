@@ -59,37 +59,38 @@
         android:id="@+id/b"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-black"
         android:text="BRANCH"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/BRANCH_ET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ROLLNUMBER_ET" />
+        app:layout_constraintTop_toTopOf="@+id/BRANCH_ET" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-black"
         android:text="CPI"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/CPI_ET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BRANCH_ET" />
+        app:layout_constraintTop_toTopOf="@+id/CPI_ET" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="26dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-black"
         android:text="PHONE"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/PHONE_ET"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CPI_ET" />
+        app:layout_constraintTop_toTopOf="@+id/PHONE_ET" />
 
     <TextView
         android:id="@+id/textView7"
@@ -99,6 +100,7 @@
         android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-black"
         android:text="ROLL NUMBER"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_text" />
 
@@ -145,7 +147,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginStart="73dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="number"
