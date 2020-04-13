@@ -14,28 +14,16 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <EditText
-        android:id="@+id/name_text"
-        android:layout_width="0dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Company Name To Display"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar1" />
-
-    <EditText
         android:id="@+id/job_text"
         android:layout_width="0dp"
         android:layout_height="49dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="Job Title"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_text" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar1" />
 
     <EditText
         android:id="@+id/description_text"

@@ -51,7 +51,8 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
 
     private Uri resultUri = null;
     private static final int GALLERY_REQUEST = 182;
-    private ProgressDialog mProgress;
+    //final ProgressDialog mProgress = new ProgressDialog();
+
     String [] branches = {"Select..." , "CSE" , "ME" , "EP", "EEE" , "ECE" , "MnC"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,11 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                startActivityForResult(intent, GALLERY_REQUEST);
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1,1)
+                        .start(CompanyEditProfilePage.this);
+                //startActivityForResult(intent, CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE);
 
             }
         });
@@ -250,18 +255,23 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
-
+        if(requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK){
+            System.out.println("NAA>>>>>>>>>>>>>>>>>ppppppppppppppppppp");
 
             CropImage.activity()
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setAspectRatio(1,1)
                     .start(this);
-
+            System.out.println("NAA>>>>>>>>>>>>>>>>>999999999999");
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            final ProgressDialog mProgress = new ProgressDialog(CompanyEditProfilePage.this);
+            mProgress.setTitle("Uploading The Image...");
+            mProgress.show();
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            System.out.println("NAA>>>>>>>>>>>>>>>>>");
             if (resultCode == RESULT_OK) {
+
                 Uri resultUri = result.getUri();
                 //profile_button.setImageURI(resultUri);
                 Picasso.with(CompanyEditProfilePage.this).load(resultUri).fit().into(profile_button);
@@ -270,7 +280,7 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
                 mStorage.child(mAuth.getCurrentUser().getEmail()).putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(CompanyEditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
+
                         System.out.println("NAHI HUA>>>>>>>><<<<<<<<<<<<<<<>>>>>>>>>");
                         StorageReference downloaduriref = mStorage.child(mAuth.getCurrentUser().getEmail());
                         Task<Uri> downloaduritask = downloaduriref.getDownloadUrl();
@@ -278,13 +288,21 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
                         Uri downloaduri = downloaduritask.getResult();
                         DocumentReference userRef = db.collection("users").document(mAuth.getCurrentUser().getEmail());
                         userRef.update("ImageUrl",downloaduri.toString());
-                        //mProgress.dismiss();
+                        mProgress.dismiss();
                         //profile_button.setImageURI();
+                        Toast.makeText(CompanyEditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
 
                     }
                 });
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
+                mProgress.dismiss();
+                //profile_button.setImageURI();
+                Toast.makeText(CompanyEditProfilePage.this,"Some Error Occurred!",Toast.LENGTH_SHORT).show();
+            }else{
+                mProgress.dismiss();
+                //profile_button.setImageURI();
+                Toast.makeText(CompanyEditProfilePage.this,"Some Error Occurred!",Toast.LENGTH_SHORT).show();
             }
             //mProgress.setMessage("Uploading...");
             //mProgress.show();

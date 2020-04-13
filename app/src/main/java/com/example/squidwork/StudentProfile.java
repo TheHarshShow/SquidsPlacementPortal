@@ -50,7 +50,7 @@ public class StudentProfile extends AppCompatActivity {
 
 
 
-        Profile_Button = (ImageButton) findViewById(R.id.profile_pic);
+        Profile_Button = (ImageButton) findViewById(R.id.profile_pic_student);
         edit_button = (Button) findViewById(R.id.edit_profile_button);
         name = (TextView) findViewById(R.id.nameTextView);
 
@@ -101,7 +101,36 @@ public class StudentProfile extends AppCompatActivity {
                 }
             }
         });
-
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(e!=null){
+                    Log.w(TAG,"Listen Failed",e);
+                    return;
+                }
+                if(documentSnapshot!=null && documentSnapshot.exists()){
+                    Map<String, Object> docdata = new HashMap();
+                    docdata = documentSnapshot.getData();
+                    String br = docdata.get("Branch").toString();
+                    String em = docdata.get("email").toString();
+                    String rn = docdata.get("Roll Number").toString();
+                    String ph = docdata.get("Phone").toString();
+                    String cp = docdata.get("CPI").toString();
+                    String nm = docdata.get("Name").toString();
+                    String img = docdata.get("ImageUrl").toString();
+                    if(!img.equals("None")){
+                        Picasso.with(StudentProfile.this).load(img).fit().into(Profile_Button);
+                    }
+                    branch.setText(br);
+                    cpi.setText(cp);
+                    email.setText(em);
+                    rollnumber.setText(rn);
+                    phone.setText(ph);
+                    name.setText(nm);
+                }
+            }
+        });
 
         edit_button.setOnClickListener(new View.OnClickListener() {
             @Override

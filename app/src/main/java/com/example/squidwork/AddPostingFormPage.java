@@ -2,6 +2,7 @@ package com.example.squidwork;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.FileUtils;
 import android.util.Log;
@@ -33,6 +35,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -57,7 +61,7 @@ public class AddPostingFormPage extends AppCompatActivity {
     private String TAG = "addPostingPage";
     private Uri file;
     FirebaseStorage storage;
-
+    private  String comname;
     private CheckBox csebox;
     private CheckBox mncbox;
     private CheckBox eeebox;
@@ -101,24 +105,46 @@ public class AddPostingFormPage extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(myFileIntent,"Choose File to Upload.."),PICK_FILE_REQUEST);
             }
         });
+        DocumentReference userRef = db.collection("users").document(mAuth.getCurrentUser().getEmail().toString());
 
+        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if(document.exists()){
+
+                        Map<String, Object> docdata = new HashMap();
+                        docdata = document.getData();
+
+
+                        comname = docdata.get("Name").toString();
+
+
+
+
+                    }
+
+
+                }
+            }
+        });
         Button postButton = (Button) findViewById(R.id.post_button);
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText nameTextView = (EditText) findViewById(R.id.name_text);
+                //EditText nameTextView = (EditText) findViewById(R.id.);
                 EditText jobTextView = (EditText) findViewById(R.id.job_text);
                 EditText descriptionTextView = (EditText) findViewById(R.id.description_text);
                 EditText minCpiTextView = (EditText) findViewById(R.id.minCpiText);
 
-                if (nameTextView.getText().toString().equals("")){
-
-                    Toast.makeText(AddPostingFormPage.this, "Fill Company Name Field", Toast.LENGTH_SHORT).show();
-
-                } else if(jobTextView.getText().toString().equals("")){
+                if(jobTextView.getText().toString().equals("")){
 
                     Toast.makeText(AddPostingFormPage.this, "Fill Job Title Field", Toast.LENGTH_SHORT).show();
-                } else {
+                }else if(comname==null){
+                    Toast.makeText(AddPostingFormPage.this, "Company Name cannot be identified!", Toast.LENGTH_SHORT).show();
+                }else {
 
                     final CollectionReference postsRef = db.collection("posts");
                     Map postDesc = new HashMap();
@@ -128,7 +154,7 @@ public class AddPostingFormPage extends AppCompatActivity {
 
                     final Long tsLong = System.currentTimeMillis();
                     postDesc.put("approvalStatus" ,"Waiting");
-                    postDesc.put("companyName", nameTextView.getText().toString());
+                    postDesc.put("companyName", comname);
                     postDesc.put("jobTitle", jobTextView.getText().toString());
                     postDesc.put("jobDescription", descriptionTextView.getText().toString());
                     postDesc.put("timeStamp", tsLong);
