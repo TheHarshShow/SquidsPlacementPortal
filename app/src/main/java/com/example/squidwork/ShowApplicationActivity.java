@@ -86,7 +86,7 @@ public class ShowApplicationActivity extends AppCompatActivity {
 
                 if(!url.equals("blank")){
 
-                    Toast.makeText(ShowApplicationActivity.this, "Downloading Brochure...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShowApplicationActivity.this, "Downloading CV...", Toast.LENGTH_SHORT).show();
 
 
 
