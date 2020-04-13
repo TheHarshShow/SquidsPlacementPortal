@@ -82,15 +82,11 @@ public class ApplyForm extends AppCompatActivity {
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText nameTextView = (EditText) findViewById(R.id.name_text);
+                //EditText nameTextView = (EditText) findViewById(R.id.name_text);
                 EditText skillsTextView = (EditText) findViewById(R.id.skills_text);
                 EditText bioTextView = (EditText) findViewById(R.id.bio_text);
 
-                if (nameTextView.getText().toString().equals("")){
-
-                    Toast.makeText(ApplyForm.this, "Fill Name Field", Toast.LENGTH_SHORT).show();
-
-                } else if(skillsTextView.getText().toString().equals("")){
+                if(skillsTextView.getText().toString().equals("")){
 
                     Toast.makeText(ApplyForm.this, "Fill Skills Title Field", Toast.LENGTH_SHORT).show();
 
@@ -108,7 +104,7 @@ public class ApplyForm extends AppCompatActivity {
 
                     final Long tsLong = System.currentTimeMillis();
                     applDesc.put("approvalStatus" ,"Waiting");
-                    applDesc.put("Name", nameTextView.getText().toString());
+                    applDesc.put("Name", mAuth.getCurrentUser().getDisplayName().toString());
                     applDesc.put("skills", skillsTextView.getText().toString());
                     applDesc.put("bio", bioTextView.getText().toString());
                     applDesc.put("timeStamp", tsLong);
