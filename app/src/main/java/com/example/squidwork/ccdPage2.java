@@ -202,6 +202,7 @@ public class ccdPage2 extends Fragment implements MyAdapter4.OnNoteListener{
                                     sac.jobTitle = docData.get("jobTitle").toString();
                                     sac.skills = docData.get("skills").toString();
                                     sac.approvalStatus = docData.get("approvalStatus").toString();
+                                    sac.url = docData.get("cvURL").toString();
                                     break;
 
                                 }

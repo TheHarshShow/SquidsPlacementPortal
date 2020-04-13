@@ -191,6 +191,7 @@ public class CompanyPage2 extends Fragment implements MyAdapter5.OnNoteListener{
                                     sac2.jobTitle = docData.get("jobTitle").toString();
                                     sac2.skills = docData.get("skills").toString();
                                     sac2.approvalStatus = docData.get("approvalStatus").toString();
+                                    sac2.url = docData.get("cvURL").toString();
 
                                     break;
                                 }

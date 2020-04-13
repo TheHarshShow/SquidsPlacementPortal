@@ -68,8 +68,6 @@ public class StudentShowApplicationActivity extends AppCompatActivity {
 
         url = sac.url;
 
-
-
         cvButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
