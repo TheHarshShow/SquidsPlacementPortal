@@ -62,7 +62,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:fontFamily="sans-serif-black"
-        android:text="ROLL NUMBER    :   "
+        android:text="ROLL NUMBER"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
@@ -81,12 +81,13 @@
 
     <TextView
         android:id="@+id/branchtext"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-black"
-        android:text="BRANCH               :   "
+        android:text="BRANCH"
+        app:layout_constraintEnd_toEndOf="@+id/roll_number_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/roll_number_text" />
 
@@ -94,22 +95,22 @@
         android:id="@+id/branch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
         android:text="Branch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/branchtext"
+        app:layout_constraintStart_toStartOf="@+id/roll_number"
         app:layout_constraintTop_toBottomOf="@+id/roll_number" />
 
     <TextView
         android:id="@+id/cpi_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-black"
-        android:text="CPI                         :   "
+        android:text="@string/common_google_play_services_install_button"
+        app:layout_constraintEnd_toEndOf="@+id/branchtext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/branchtext" />
 
@@ -117,22 +118,22 @@
         android:id="@+id/cpi"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
         android:text="CPI"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cpi_text"
+        app:layout_constraintStart_toStartOf="@+id/branch"
         app:layout_constraintTop_toBottomOf="@+id/branch" />
 
     <TextView
         android:id="@+id/email_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-black"
-        android:text="EMAIL                   :   "
+        android:text="EMAIL"
+        app:layout_constraintEnd_toEndOf="@+id/cpi_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cpi_text" />
 
@@ -140,23 +141,23 @@
         android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="22dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="22dp"
         android:text="WOW@GMAIL.COM"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/email_text"
+        app:layout_constraintStart_toStartOf="@+id/cpi"
         app:layout_constraintTop_toBottomOf="@+id/cpi" />
 
     <TextView
         android:id="@+id/phone_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-black"
-        android:text="PHONE                  :   "
+        android:text="PHONE"
+        app:layout_constraintEnd_toEndOf="@+id/email_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_text" />
 
@@ -164,12 +165,11 @@
         android:id="@+id/phone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
         android:text="NUMBER"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/phone_text"
+        app:layout_constraintStart_toStartOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
