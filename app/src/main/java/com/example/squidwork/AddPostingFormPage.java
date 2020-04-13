@@ -190,8 +190,6 @@ public class AddPostingFormPage extends AppCompatActivity {
 
                                 Toast.makeText(AddPostingFormPage.this, "Could not add post due to some error.", Toast.LENGTH_SHORT).show();
 
-
-
                             }
 
 

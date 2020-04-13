@@ -158,7 +158,7 @@ public class ApplyForm extends AppCompatActivity {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                                 progressDialog.dismiss();
-                                Toast.makeText(ApplyForm.this, "Brochure upload succeeded", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ApplyForm.this, "CV upload succeeded", Toast.LENGTH_SHORT).show();
 
                                 storageRef.child("cvs/"+job.email+"-"+job.timestamp+"-"+currentUser.getEmail()+"-"+tsLong).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
