@@ -300,6 +300,15 @@ public class AddPostingFormPage extends AppCompatActivity {
                             }
                         });
 
+                    } else {
+
+                        y[0]=1;
+                        if(y[0]==1 && x[0]==1){
+
+                            finish();
+
+                        }
+
                     }
 
 
