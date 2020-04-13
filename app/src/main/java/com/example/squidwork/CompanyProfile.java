@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +51,7 @@ public class CompanyProfile extends AppCompatActivity {
 
 
 
-        Profile_Button = (ImageButton) findViewById(R.id.profile_pic);
+        Profile_Button = (ImageButton) findViewById(R.id.profile_pic_company);
         edit_button = (Button) findViewById(R.id.edit_profile_button);
         name = (TextView) findViewById(R.id.nameTextView);
 
@@ -63,43 +65,68 @@ public class CompanyProfile extends AppCompatActivity {
 
         DocumentReference userRef = db.collection("users").document(mAuth.getCurrentUser().getEmail().toString());
 
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @RequiresApi(api = Build.VERSION_CODES.N)
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if(task.isSuccessful()){
+//                    DocumentSnapshot document = task.getResult();
+//                    if(document.exists()){
+//
+//                        Map<String, Object> docdata = new HashMap();
+//                        docdata = document.getData();
+//
+//                        String em = docdata.get("email").toString();
+//
+//                        String ph = docdata.get("Phone").toString();
+//
+//                        String nm = docdata.get("Name").toString();
+//                        String img = docdata.get("ImageUrl").toString();
+//                        if(!img.equals("None")){
+//                            Picasso.with(CompanyProfile.this).load(img).fit().into(Profile_Button);
+//                        }
+//
+//
+//                        email.setText(em);
+//                        phone.setText(ph);
+//                        name.setText(nm);
+//
+//
+//
+//                    }
+//
+//
+//                }
+//            }
+//        });
+       userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-                    if(document.exists()){
-
-                        Map<String, Object> docdata = new HashMap();
-                        docdata = document.getData();
-
-                        String em = docdata.get("email").toString();
-
-                        String ph = docdata.get("Phone").toString();
-
-                        String nm = docdata.get("Name").toString();
-                        String img = docdata.get("ImageUrl").toString();
-                        if(!img.equals("None")){
-                            Picasso.with(CompanyProfile.this).load(img).fit().into(Profile_Button);
-                        }
-
-
-                        email.setText(em);
-
-                        phone.setText(ph);
-                        name.setText(nm);
-
-
-
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(e!=null){
+                    Log.w(TAG,"Listen Failed",e);
+                    return;
+                }
+                if(documentSnapshot!=null && documentSnapshot.exists()){
+                    Map docdata = documentSnapshot.getData();
+                    String em = docdata.get("email").toString();
+                    String ph = docdata.get("Phone").toString();
+                    String nm = docdata.get("Name").toString();
+                    String img = docdata.get("ImageUrl").toString();
+                    System.out.println(img);
+                    System.out.println("IMAGEIMAGEIMAAGE");
+                    if(!img.equals("None")){
+                        System.out.println("IMAGEIMAGEIMAAGE");
+                        Picasso.with(CompanyProfile.this).load(img).fit().into(Profile_Button);
                     }
 
 
+                    email.setText(em);
+                    phone.setText(ph);
+                    name.setText(nm);
                 }
             }
         });
-
-
         edit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

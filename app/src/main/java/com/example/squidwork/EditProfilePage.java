@@ -53,7 +53,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
     private Spinner branch;
     private Uri resultUri = null;
     private static final int GALLERY_REQUEST = 182;
-    private ProgressDialog mProgress;
+    //private ProgressDialog mProgress;
     String [] branches = {"Select..." , "CSE" , "ME" , "EP", "EEE" , "ECE" , "MnC"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +85,10 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                startActivityForResult(intent, GALLERY_REQUEST);
-
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1,1)
+                        .start(EditProfilePage.this);
             }
         });
 
@@ -278,14 +280,14 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
         if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
 
 
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
-                    .start(this);
+
 
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            final ProgressDialog mProgress2 = new ProgressDialog(EditProfilePage.this);
+            mProgress2.setTitle("Uploading The Image...");
+            mProgress2.show();
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 //profile_button.setImageURI(resultUri);
@@ -295,7 +297,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                 mStorage.child(mAuth.getCurrentUser().getEmail()).putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(EditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
+
                         System.out.println("NAHI HUA>>>>>>>><<<<<<<<<<<<<<<>>>>>>>>>");
                         StorageReference downloaduriref = mStorage.child(mAuth.getCurrentUser().getEmail());
                         Task<Uri> downloaduritask = downloaduriref.getDownloadUrl();
@@ -305,11 +307,18 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                         userRef.update("ImageUrl",downloaduri.toString());
                         //mProgress.dismiss();
                         //profile_button.setImageURI();
+                        mProgress2.dismiss();
+                        Toast.makeText(EditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
 
                     }
                 });
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
+                mProgress2.dismiss();
+                Toast.makeText(EditProfilePage.this,"Some Error Occurred!",Toast.LENGTH_SHORT).show();
+            }else{
+                mProgress2.dismiss();
+                Toast.makeText(EditProfilePage.this,"Some Error Occurred!",Toast.LENGTH_SHORT).show();
             }
             //mProgress.setMessage("Uploading...");
             //mProgress.show();
@@ -320,7 +329,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(), "Selected User: "+ branches[position] ,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Selected Branch: "+ branches[position] ,Toast.LENGTH_SHORT).show();
         BranchSelected = branches[position];
 
     }
