@@ -144,7 +144,13 @@ public class StudentPage2 extends Fragment implements MyAdapter6.OnNoteListener{
                                         docData.get("bio").toString(), docData.get("skills").toString(), docData.get("companyEmail").toString(),
                                         docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("approvalStatus").toString(),
                                         documentChange.getDocument().getId(), (Long) docData.get("timeStamp"), "blank");
+
+
+
                                 applications.add(application);
+
+
+
 
                             }
 
@@ -181,6 +187,7 @@ public class StudentPage2 extends Fragment implements MyAdapter6.OnNoteListener{
                                     sac.jobTitle = docData.get("jobTitle").toString();
                                     sac.skills = docData.get("skills").toString();
                                     sac.approvalStatus = docData.get("approvalStatus").toString();
+                                    sac.url = docData.get("cvURL").toString();
                                     break;
 
 

@@ -43,6 +43,8 @@ public class StudentShowApplicationActivity extends AppCompatActivity {
         final ApplicationToLoad sac = (ApplicationToLoad) getIntent().getSerializableExtra("selected job");
 
 
+
+
         studentNameTextView = (TextView) findViewById(R.id.student_name_text_view);
         studentEmailTextView = (TextView) findViewById(R.id.student_email_text_view);
         companyNameTextView = (TextView) findViewById(R.id.company_name_text_view);
@@ -67,13 +69,14 @@ public class StudentShowApplicationActivity extends AppCompatActivity {
         url = sac.url;
 
 
+
         cvButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(!url.equals("blank")){
 
-                    Toast.makeText(StudentShowApplicationActivity.this, "Downloading Brochure...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentShowApplicationActivity.this, "Downloading CV...", Toast.LENGTH_SHORT).show();
 
 
 
