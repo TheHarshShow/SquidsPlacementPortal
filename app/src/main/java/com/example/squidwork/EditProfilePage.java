@@ -47,6 +47,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
     private EditText roll;
     private EditText cpi;
     private EditText phone;
+    private String ImageUrl=null;
     private String BranchSelected;
     private Button saveButton;
     private final String TAG = "TAG";
@@ -121,12 +122,11 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                 @Override
                                 public void onClick(View view) {
                                     //String br = branch.getText().toString();
-
+                                    ImageUrl = docdata.get("ImageUrl").toString();
                                     String rn = roll.getText().toString();
                                     String ph = phone.getText().toString();
                                     String cp = cpi.getText().toString();
                                     String nm = mAuth.getCurrentUser().getDisplayName();
-
                                     System.out.println(rn);
                                     System.out.println(rn);
                                     System.out.println(rn);
@@ -139,6 +139,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                         docdata.put("Phone",ph);
                                         docdata.put("CPI",cp);
                                         docdata.put("Name",nm);
+                                        docdata.put("ImageUrl",ImageUrl);
                                         docdata.put("Branch", BranchSelected);
                                         System.out.println(docdata);
                                         userRef.set(docdata).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -154,8 +155,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if(task.isSuccessful()){
                                                                 Toast.makeText(EditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
-                                                                Intent intent = new Intent(EditProfilePage.this,MainActivity.class);
-                                                                startActivity(intent);
+                                                                finish();
                                                             }
                                                         }
                                                     });
@@ -191,6 +191,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                 Picasso.with(EditProfilePage.this).load(img).fit().into(profile_button);
                             }
                             //branch.setText(br);
+                            ImageUrl=img;
                             cpi.setText(cp);
                             roll.setText(rn);
                             phone.setText(ph);
@@ -216,6 +217,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                         docdata.put("Roll Number",rn);
                                         docdata.put("Phone",ph);
                                         docdata.put("CPI",cp);
+                                        docdata.put("ImageUrl",ImageUrl);
                                         docdata.put("Name",nm);
                                         docdata.put("Branch", BranchSelected);
                                         System.out.println("BRACCHFWFWRVWV111111111111111111111111");
@@ -228,8 +230,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                                                 if(task.isSuccessful()){
                                                     System.out.println("YHA..............44");
                                                     Toast.makeText(EditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
-                                                    Intent intent = new Intent(EditProfilePage.this,StudentProfile.class);
-                                                    startActivity(intent);
+                                                    finish();
                                                 }else{
                                                     System.out.println("YHA.............777");
                                                 }
@@ -277,12 +278,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
 
-
-
-
-        }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             final ProgressDialog mProgress2 = new ProgressDialog(EditProfilePage.this);
@@ -307,6 +303,7 @@ public class EditProfilePage extends AppCompatActivity  implements AdapterView.O
                         userRef.update("ImageUrl",downloaduri.toString());
                         //mProgress.dismiss();
                         //profile_button.setImageURI();
+                        ImageUrl=downloaduri.toString();
                         mProgress2.dismiss();
                         Toast.makeText(EditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
 

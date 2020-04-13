@@ -44,8 +44,9 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
     private FirebaseAuth mAuth;
     private ImageButton profile_button;
     private EditText name;
-
+    private String ImageUrl=null;
     private EditText phone;
+
 
     private Button saveButton;
 
@@ -114,7 +115,7 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
 
 
                                     String ph = phone.getText().toString();
-
+                                    ImageUrl = docdata.get("ImageUrl").toString();
                                     String nm = name.getText().toString();
 
 
@@ -125,7 +126,7 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
                                         docdata.put("Phone",ph);
 
                                         docdata.put("Name",nm);
-
+                                        docdata.put("ImageUrl",ImageUrl);
                                         System.out.println(docdata);
                                         userRef.set(docdata).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @RequiresApi( api = Build.VERSION_CODES.N)
@@ -140,17 +141,16 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if(task.isSuccessful()){
                                                                 Toast.makeText(CompanyEditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
-                                                                Intent intent = new Intent(CompanyEditProfilePage.this,MainActivity.class);
-                                                                startActivity(intent);
+                                                                finish();
                                                             }
                                                         }
                                                     });
                                                     //Toast.makeText(CompanyEditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
-                                                    //finish();
+
 
                                                 }else{
                                                     System.out.println("RRRRRR8888888888888888888RRRRRRRRRRRRRRR");
-                                                    Toast.makeText(CompanyEditProfilePage.this,"Profile Updated Successfully But Try Once Again",Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(CompanyEditProfilePage.this,"Try Once Again",Toast.LENGTH_LONG).show();
                                                     //finish();
                                                 }
                                             }
@@ -177,7 +177,7 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
                                 Picasso.with(CompanyEditProfilePage.this).load(img).fit().into(profile_button);
                             }
                             //branch.setText(br);
-
+                            ImageUrl=img;
                             phone.setText(ph);
                             name.setText(nm);
 
@@ -198,16 +198,17 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
 
                                         docdata.put("Name",nm);
 
+                                        docdata.put("ImageUrl",ImageUrl);
 
-                                        userRef.set(docdata).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                        userRef.update(docdata).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @RequiresApi( api = Build.VERSION_CODES.N)
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(task.isSuccessful()){
                                                     System.out.println("YHA..............44");
                                                     Toast.makeText(CompanyEditProfilePage.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
-                                                    Intent intent = new Intent(CompanyEditProfilePage.this,CompanyProfile.class);
-                                                    startActivity(intent);
+                                                    finish();
                                                 }else{
                                                     System.out.println("YHA.............777");
                                                 }
@@ -255,15 +256,7 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if(requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK){
-            System.out.println("NAA>>>>>>>>>>>>>>>>>ppppppppppppppppppp");
 
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
-                    .start(this);
-            System.out.println("NAA>>>>>>>>>>>>>>>>>999999999999");
-        }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             final ProgressDialog mProgress = new ProgressDialog(CompanyEditProfilePage.this);
             mProgress.setTitle("Uploading The Image...");
@@ -288,6 +281,7 @@ public class CompanyEditProfilePage extends AppCompatActivity   {
                         Uri downloaduri = downloaduritask.getResult();
                         DocumentReference userRef = db.collection("users").document(mAuth.getCurrentUser().getEmail());
                         userRef.update("ImageUrl",downloaduri.toString());
+                        ImageUrl=downloaduri.toString();
                         mProgress.dismiss();
                         //profile_button.setImageURI();
                         Toast.makeText(CompanyEditProfilePage.this," Image Uploaded Successfully",Toast.LENGTH_SHORT).show();
