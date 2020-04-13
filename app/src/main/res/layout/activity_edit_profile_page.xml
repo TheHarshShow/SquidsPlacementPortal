@@ -104,15 +104,15 @@
 
     <Spinner
         android:id="@+id/BRANCH_ET"
-        android:layout_width="215dp"
+        android:layout_width="0dp"
         android:layout_height="31dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ROLLNUMBER_ET"
+        android:layout_marginTop="12dp"
         android:prompt="@string/app_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ROLLNUMBER_ET"
 
-        />
+        app:layout_constraintTop_toBottomOf="@+id/ROLLNUMBER_ET" />
 
     <Button
         android:id="@+id/csave_profile_button"
@@ -130,35 +130,39 @@
 
     <EditText
         android:id="@+id/CPI_ET"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/BRANCH_ET"
         app:layout_constraintTop_toBottomOf="@+id/BRANCH_ET" />
 
     <EditText
         android:id="@+id/ROLLNUMBER_ET"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginStart="73dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/name_text" />
 
     <EditText
         android:id="@+id/PHONE_ET"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/CPI_ET"
         app:layout_constraintTop_toBottomOf="@+id/CPI_ET" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
