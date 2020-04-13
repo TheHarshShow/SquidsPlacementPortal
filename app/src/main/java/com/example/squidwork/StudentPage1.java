@@ -259,6 +259,116 @@ public class StudentPage1 extends Fragment implements MyAdapter2.OnNoteListener 
 
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(student_branch!=null && student_cpi != null) {
+//
+//
+//            db.collection("posts")
+//                    .whereEqualTo("approvalStatus", "Approved")
+//                    .whereArrayContains("branches",student_branch)
+//                    .whereLessThanOrEqualTo("minCPI",student_cpi)
+//                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                        @RequiresApi(api = Build.VERSION_CODES.N)
+//                        @Override
+//                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                            if (e != null) {
+//
+//                                Log.d(TAG, "listen:error", e);
+//                                return;
+//
+//                            }
+//                            System.out.println("TADADAAA");
+//
+//
+//                            for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
+//                                switch (documentChange.getType()) {
+//                                    case ADDED:
+//                                        System.out.println("ADDDEDEDEDEDEDEDED");
+//                                        Map docData = new HashMap();
+//                                        docData = documentChange.getDocument().getData();
+//                                        System.out.println("ADDDD " + docData);
+//                                        JobPostingStudent job = new JobPostingStudent(docData.get("companyName").toString(), docData.get("jobTitle").toString(), docData.get("jobDescription").toString(),
+//                                                (Long) docData.get("timeStamp"), docData.get("companyEmail").toString(), docData.get("brochureURL").toString());
+//                                        jobs.add(job);
+//                                        jobs.sort(new Comparator<JobPostingStudent>() {
+//                                            @Override
+//                                            public int compare(JobPostingStudent o1, JobPostingStudent o2) {
+//                                                return o2.timestamp.compareTo(o1.timestamp);
+//                                            }
+//                                        });
+//
+//                                        mAdapter.notifyDataSetChanged();
+//
+//                                        break;
+//                                    case MODIFIED:
+//                                        System.out.println("MODIFIEDDEDEDED");
+//                                        Map docData1 = new HashMap();
+//                                        docData1 = documentChange.getDocument().getData();
+//
+//                                        String ID=documentChange.getDocument().getId();
+//
+//                                        for(JobPostingStudent job1:jobs){
+//
+//
+//                                            if(ID.equals(job1.email+"-"+job1.timestamp.toString())){
+//
+//                                                job1.companyName = docData1.get("companyName").toString();
+//                                                job1.jobTitle = docData1.get("jobTitle").toString();
+//                                                job1.jobDescripion = docData1.get("jobDescription").toString();
+//                                                job1.timestamp = (Long) docData1.get("timeStamp");
+//                                                job1.email = docData1.get("companyEmail").toString();
+//                                                //job.approvalStatus = docData.get("approvalStatus").toString();
+//                                                job1.url = docData1.get("brochureURL").toString();
+//                                                break;
+//
+//                                            }
+//
+//
+//
+//
+//                                        }
+//                                        jobs.sort(new Comparator<JobPostingStudent>() {
+//                                            @Override
+//                                            public int compare(JobPostingStudent o1, JobPostingStudent o2) {
+//                                                return o2.timestamp.compareTo(o1.timestamp);
+//                                            }
+//                                        });
+//
+//                                        mAdapter.notifyDataSetChanged();
+//                                        break;
+//                                    case REMOVED:
+//                                        System.out.println("REMOVEDDEDED");
+//                                        Map docData2 = new HashMap();
+//                                        docData1 = documentChange.getDocument().getData();
+//                                        String ID1=documentChange.getDocument().getId();
+//
+//                                        for(JobPostingStudent jobq:jobs){
+//
+//
+//                                            if(ID1.equals(jobq.email+"-"+jobq.timestamp.toString())){
+//
+//                                                jobs.remove(jobq);
+//                                                break;
+//
+//                                            }
+//
+//
+//
+//
+//                                        }
+//                                        jobs.sort(new Comparator<JobPostingStudent>() {
+//                                            @Override
+//                                            public int compare(JobPostingStudent o1, JobPostingStudent o2) {
+//                                                return o2.timestamp.compareTo(o1.timestamp);
+//                                            }
+//                                        });
+//                                        mAdapter.notifyDataSetChanged();
+//                                        break;
+//                                }
+//                            }
+//
+//                        }
+//                    });
+//        }
         /*
         System.out.println("6666666666666666666664444444443333333333333333333333");
         final DocumentReference userDoc = db.collection("users").document(mAuth.getCurrentUser().getEmail().toString());

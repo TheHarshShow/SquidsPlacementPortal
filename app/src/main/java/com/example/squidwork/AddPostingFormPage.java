@@ -151,7 +151,7 @@ public class AddPostingFormPage extends AppCompatActivity {
 
                     final int[] x = {0};
                     final int[] y={0};
-
+                    float x5 = Float.parseFloat(minCpiTextView.getText().toString());
                     final Long tsLong = System.currentTimeMillis();
                     postDesc.put("approvalStatus" ,"Waiting");
                     postDesc.put("companyName", comname);
@@ -160,7 +160,7 @@ public class AddPostingFormPage extends AppCompatActivity {
                     postDesc.put("timeStamp", tsLong);
                     postDesc.put("companyEmail", currentUser.getEmail());
                     postDesc.put("brochureURL", "blank");
-                    postDesc.put("minCPI",minCpiTextView.getText().toString());
+                    postDesc.put("minCPI",x5);
                     ArrayList<String> checked = new ArrayList<String>();
 
                     if(csebox.isChecked()){
