@@ -1,7 +1,7 @@
 # SquidsPlacementPortal (CSEA-IIT GUWAHATI)
 Placement Portal Project made by Squids team:
 
-1- This android app allowes companies to post jobs and students to apply to these jobs through a simple process.
+This android app allows companies to post jobs and students to apply to these jobs through a simple process.
 
 ![Ironhide_postings](https://user-images.githubusercontent.com/53634940/89447769-2f6be600-d774-11ea-8634-9dfb84b1b2e9.jpeg)
 ![stu1_apps](https://user-images.githubusercontent.com/53634940/89447877-5e825780-d774-11ea-9698-52200405be6d.jpeg)
@@ -11,7 +11,13 @@ However, these applications have to be seen and approved by the CCD to be able t
 ![student1_jobapp](https://user-images.githubusercontent.com/53634940/89448114-bcaf3a80-d774-11ea-993e-e906099a1931.jpeg)
 ![ccd_companyacc](https://user-images.githubusercontent.com/53634940/89447489-a6ed4580-d773-11ea-8b50-dcc6b0859c32.jpeg)
 
-2-
+The companies and students have profiles on which they can give their contact info and profile pictures, which can be viewed by the other parties and the CCD.
+
+![company_profile](https://user-images.githubusercontent.com/53634940/89447664-f9c6fd00-d773-11ea-8a10-c2df93f1feb5.jpeg)
+![student_profile](https://user-images.githubusercontent.com/53634940/89448040-a2755c80-d774-11ea-93da-6a092d807c83.jpeg)
+
+T
+
 
 ![ccd_companyapp](https://user-images.githubusercontent.com/53634940/89447553-c5ebd780-d773-11ea-83ea-2621d085bf00.jpeg)
 
@@ -21,7 +27,7 @@ However, these applications have to be seen and approved by the CCD to be able t
 
 4-
 
-![company_profile](https://user-images.githubusercontent.com/53634940/89447664-f9c6fd00-d773-11ea-8a10-c2df93f1feb5.jpeg)
+
 
 5-
 
@@ -45,7 +51,6 @@ However, these applications have to be seen and approved by the CCD to be able t
 
 10-
 
-![student_profile](https://user-images.githubusercontent.com/53634940/89448040-a2755c80-d774-11ea-93da-6a092d807c83.jpeg)
 
 11-
 
