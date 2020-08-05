@@ -6,6 +6,9 @@ Placement Portal Project made by Squids team:
 ![Ironhide_postings](https://user-images.githubusercontent.com/53634940/89447769-2f6be600-d774-11ea-8634-9dfb84b1b2e9.jpeg)
 ![stu1_apps](https://user-images.githubusercontent.com/53634940/89447877-5e825780-d774-11ea-9698-52200405be6d.jpeg)
 
+However, these applications have to be seen and approved by the CCD to be able to be viewed by the other party. This feature prevents spamming by companies or students.
+
+![student1_jobapp](https://user-images.githubusercontent.com/53634940/89448114-bcaf3a80-d774-11ea-993e-e906099a1931.jpeg)
 ![ccd_companyacc](https://user-images.githubusercontent.com/53634940/89447489-a6ed4580-d773-11ea-8b50-dcc6b0859c32.jpeg)
 
 2-
@@ -46,4 +49,3 @@ Placement Portal Project made by Squids team:
 
 11-
 
-![student1_jobapp](https://user-images.githubusercontent.com/53634940/89448114-bcaf3a80-d774-11ea-993e-e906099a1931.jpeg)
