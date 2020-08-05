@@ -26,7 +26,6 @@
         <activity android:name=".StudentShowApplicationActivity" />
         <activity android:name=".CompanyShowApplicationActivity" />
         <activity android:name=".ShowApplicationActivity" />
-        <activity android:name=".Posting_add_through_ccd" />
         <activity android:name=".ccdPage" />
         <activity android:name=".AddPostingFormPage" />
         <activity android:name=".CompanyPage" />

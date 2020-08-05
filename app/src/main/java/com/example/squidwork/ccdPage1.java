@@ -205,18 +205,6 @@ public class ccdPage1 extends Fragment implements MyAdapter3.OnNoteListener {
             }
         });
 
-        Button addPostingButton = (Button) v.findViewById(R.id.add_posting_button);
-
-        addPostingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                System.out.println("NENENE");
-                startActivity(new Intent(ccdPage1.this.getActivity(), Posting_add_through_ccd.class));
-
-            }
-        });
-
 
 
         return v;
