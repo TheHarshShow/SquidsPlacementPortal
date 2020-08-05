@@ -26,26 +26,14 @@ As it is shown below, student one can only see 1 job offer from ironhide, and th
 
 ![durax_ownposts](https://user-images.githubusercontent.com/53634940/89447734-1ebb7000-d774-11ea-9e3b-920613acc8ae.jpeg)
 ![Ironhide_postings](https://user-images.githubusercontent.com/53634940/89447769-2f6be600-d774-11ea-8634-9dfb84b1b2e9.jpeg)
+![stu1_offers](https://user-images.githubusercontent.com/53634940/89454707-baea7480-d77e-11ea-8352-722228eb388d.jpeg)
 
+The companes can view the applications only after they have been approved by the CCD.
 
-6-
-
-
-
-7-
-
+![stu1_apps](https://user-images.githubusercontent.com/53634940/89447877-5e825780-d774-11ea-9698-52200405be6d.jpeg) 
 ![ironhide_stuapps](https://user-images.githubusercontent.com/53634940/89447823-4579a680-d774-11ea-9a5c-55d874f90110.jpeg)
 
-8-
-
-
-
-9-
+The companies/students also have an option of uploading a brochure/resume along with their job offers/applications. 
 
 ![student_cv](https://user-images.githubusercontent.com/53634940/89448001-9093b980-d774-11ea-8bd4-60a5911b17b5.jpeg)
-
-10-
-
-
-11-
 
