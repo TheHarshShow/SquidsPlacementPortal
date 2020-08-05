@@ -54,8 +54,8 @@ public class CompanyPage extends AppCompatActivity {
     }
     private void addTabs(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new CompanyPage1(), "Company Page 1");
-        adapter.addFrag(new CompanyPage2(), "Company Page 2");
+        adapter.addFrag(new CompanyPage1(), "My Postings");
+        adapter.addFrag(new CompanyPage2(), "Applications");
         viewPager.setAdapter(adapter);
     }
 
