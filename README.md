@@ -16,22 +16,17 @@ The companies and students have profiles on which they can give their contact in
 ![company_profile](https://user-images.githubusercontent.com/53634940/89447664-f9c6fd00-d773-11ea-8a10-c2df93f1feb5.jpeg)
 ![student_profile](https://user-images.githubusercontent.com/53634940/89448040-a2755c80-d774-11ea-93da-6a092d807c83.jpeg)
 
-T
-
+All the postings and applications that are yet to be approved or rejected are dispayed to the CCD. The rest are removed to avoid confusion.
 
 ![ccd_companyapp](https://user-images.githubusercontent.com/53634940/89447553-c5ebd780-d773-11ea-83ea-2621d085bf00.jpeg)
-
-3-
-
 ![ccd_studentapp](https://user-images.githubusercontent.com/53634940/89447607-e1ef7900-d773-11ea-9f05-c7c73c99057c.jpeg)
 
-4-
-
-
-
-5-
+The jobs offers are only displayed to the relevant students as specified in the offer itself. This includes details like branch, CPI cutoff etc.
+As it is shown below, student one can only see 1 job offer from ironhide, and the the job from ironhide and the approved job offer from durax are hidden from him.
 
 ![durax_ownposts](https://user-images.githubusercontent.com/53634940/89447734-1ebb7000-d774-11ea-9e3b-920613acc8ae.jpeg)
+![Ironhide_postings](https://user-images.githubusercontent.com/53634940/89447769-2f6be600-d774-11ea-8634-9dfb84b1b2e9.jpeg)
+
 
 6-
 
