@@ -28,7 +28,7 @@ As it is shown below, student one can only see 1 job offer from ironhide, and th
 ![Ironhide_postings](https://user-images.githubusercontent.com/53634940/89447769-2f6be600-d774-11ea-8634-9dfb84b1b2e9.jpeg)
 ![stu1_offers](https://user-images.githubusercontent.com/53634940/89454707-baea7480-d77e-11ea-8352-722228eb388d.jpeg)
 
-The companes can view the applications only after they have been approved by the CCD.
+The companies can view the applications only after they have been approved by the CCD.
 
 ![stu1_apps](https://user-images.githubusercontent.com/53634940/89447877-5e825780-d774-11ea-9698-52200405be6d.jpeg) 
 ![ironhide_stuapps](https://user-images.githubusercontent.com/53634940/89447823-4579a680-d774-11ea-9a5c-55d874f90110.jpeg)
