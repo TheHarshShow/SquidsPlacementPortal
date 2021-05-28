@@ -1,5 +1,5 @@
 # SquidsPlacementPortal (CSEA-IIT GUWAHATI)
-Placement Portal Project made by Squids team:
+Placement Portal Project made by Squids team :
 
 This android app allows companies to post jobs and students to apply to these jobs through a simple process.
 
